@@ -7,13 +7,7 @@ import StaffList from './components/StaffListComponent'
 
 function App() {
   // Set column state
-  const [col, setCol] = useState({ col: 'col-xl-4' });
-
-  const handleSetColumn = (value) => {
-    setCol({
-      col: value
-    });
-  }
+  const [col, setCol] = useState('col-12 col-sm-6 col-xl-4');
 
   return (
     <div className="App">
@@ -22,12 +16,16 @@ function App() {
           <Navbar.Brand href="#home">Ứng dụng quản lý nhân sự v1.0</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#"></Nav.Link>
+          </Nav>
+          <Nav className="justify-content-end">
             <Nav.Item>
-              <Form.Select aria-label="Default select example" onChange={(e) => handleSetColumn(e.target.value)}>
+              <Form.Select aria-label="Default select example" onChange={(e) => setCol(e.target.value)}>
                 <option>Chọn định dang cột</option>
-                <option value="col-xl-6">2 cột</option>
-                <option value="col-xl-2">6 cột</option>
-                <option value="3">Three</option>
+                <option value="col-12 col-sm-6 col-xl-12">PC - 1 cột</option>
+                <option value="col-12 col-sm-6 col-xl-4">PC - 3 cột</option>
+                <option value="col-12 col-sm-6 col-xl-2">PC - 6 cột</option>
+                <option value="col-12 col-sm-12 col-xl-4">Tablet - 1 cột</option>
+                <option value="col-12 col-sm-6 col-xl-4">Tablet - 2 cột</option>
               </Form.Select>
             </Nav.Item>
           </Nav>
