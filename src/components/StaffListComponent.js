@@ -2,20 +2,22 @@ import { useState } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import StaffDetail from './StaffDetailComponent';
 
-function StaffList({ staffs }) {
+function StaffList({ props }) {
+  const [staff, col] = props;
+  console.log(props);
   // Show StaffDetail Component State
   const [show, setShow] = useState(false);
   // Get StaffDetail State
   const [selectedStaff, setSelectedStaff] = useState({});
 
-  const handleViewStaffDetail = (staff) => {
-    setSelectedStaff(staff);
-    setShow(!show);
-  }
+  // const handleViewStaffDetail = (staff) => {
+  //   setSelectedStaff(staff);
+  //   setShow(!show);
+  // }
 
   return (
     <>
-      <Container>
+      {/* <Container>
         <div className="row">
           {staffs.map((staff) => (
             <div className="col-12 col-md-6 col-xl-4" key={staff.id}>
@@ -28,7 +30,7 @@ function StaffList({ staffs }) {
         <div className='row'>
           {(show && <StaffDetail selectedStaff={selectedStaff} />) || 'Bấm vào tên nhân viên để xem thông tin.'}
         </div>
-      </Container>
+      </Container> */}
     </>
   )
 }
