@@ -33,6 +33,12 @@ function App() {
           }
         ))
         break;
+      default:
+        setCol({
+          mobile: 'col-12',
+          tablet: 'col-sm-6',
+          pc: 'col-xl-4'
+        })
     }
 
   }
@@ -48,7 +54,7 @@ function App() {
           <Nav className="justify-content-end">
             <Nav.Item>
               <Form.Select aria-label="Default select example" onChange={(e) => handleColView(e.target.value)}>
-                <option>Chọn định dang cột</option>
+                <option value='default'>Chọn định dang cột</option>
                 <option value="col-xl-12">PC - 1 cột</option>
                 <option value="col-xl-4">PC - 3 cột</option>
                 <option value="col-xl-2">PC - 6 cột</option>
