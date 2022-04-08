@@ -3,7 +3,7 @@ import { Container, Card } from 'react-bootstrap';
 import StaffDetail from './StaffDetailComponent';
 
 function StaffList({ props }) {
-  // Use destructuring with props
+  // Use destructuring with props - staffs = array | col = object
   const [staffs, col] = props;
   // Show StaffDetail Component State
   const [show, setShow] = useState(false);
@@ -24,7 +24,7 @@ function StaffList({ props }) {
       <Container>
         <div className="row">
           {staffs.map((staff) => (
-            <div className={col} key={staff.id}>
+            <div className={Object.values(col).join(' ')} key={staff.id}>
               <Card className="my-1" key={staff.id}>
                 <Card.Body onClick={() => handleViewStaffDetail(staff)}>{staff.name}</Card.Body>
               </Card>

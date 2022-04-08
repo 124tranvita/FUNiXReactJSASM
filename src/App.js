@@ -7,7 +7,35 @@ import StaffList from './components/StaffListComponent'
 
 function App() {
   // Set column state
-  const [col, setCol] = useState('col-12 col-sm-6 col-xl-4');
+  const [col, setCol] = useState({
+    mobile: 'col-12',
+    tablet: 'col-sm-6',
+    pc: 'col-xl-4'
+  });
+
+  const handleColView = (value) => {
+    let viewedDevice = value.slice(0, 6);
+
+    switch (viewedDevice) {
+      case 'col-sm':
+        setCol(prevState => (
+          {
+            ...prevState,
+            tablet: value
+          }
+        ))
+        break;
+      case 'col-xl':
+        setCol(prevState => (
+          {
+            ...prevState,
+            pc: value
+          }
+        ))
+        break;
+    }
+
+  }
 
   return (
     <div className="App">
@@ -19,13 +47,13 @@ function App() {
           </Nav>
           <Nav className="justify-content-end">
             <Nav.Item>
-              <Form.Select aria-label="Default select example" onChange={(e) => setCol(e.target.value)}>
+              <Form.Select aria-label="Default select example" onChange={(e) => handleColView(e.target.value)}>
                 <option>Chọn định dang cột</option>
-                <option value="col-12 col-sm-6 col-xl-12">PC - 1 cột</option>
-                <option value="col-12 col-sm-6 col-xl-4">PC - 3 cột</option>
-                <option value="col-12 col-sm-6 col-xl-2">PC - 6 cột</option>
-                <option value="col-12 col-sm-12 col-xl-4">Tablet - 1 cột</option>
-                <option value="col-12 col-sm-6 col-xl-4">Tablet - 2 cột</option>
+                <option value="col-xl-12">PC - 1 cột</option>
+                <option value="col-xl-4">PC - 3 cột</option>
+                <option value="col-xl-2">PC - 6 cột</option>
+                <option value="col-sm-12">Tablet - 1 cột</option>
+                <option value="col-sm-6">Tablet - 2 cột</option>
               </Form.Select>
             </Nav.Item>
           </Nav>
