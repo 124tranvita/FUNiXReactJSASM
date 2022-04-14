@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createRoot } from 'react-dom/client';
+import { StoreProvider } from './store';
 
 // Create cotainer
 const container = document.getElementById('root');
@@ -12,7 +13,9 @@ const root = createRoot(container);
 // Render root
 root.render(
   <React.StrictMode>
-    <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   </React.StrictMode>,
 )
 

@@ -1,47 +1,22 @@
 import './App.css';
-import { useState } from 'react';
+import { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar, Form } from 'react-bootstrap';
+import { StoreContext } from './store';
 import { STAFFS } from './shared/staffs'
 import StaffList from './components/StaffListComponent'
+import ViewColumn from './components/ViewColumnComponent';
+
+const col = {
+  mobile: 'col-12',
+  tablet: 'col-sm-6',
+  pc: 'col-xl-4'
+}
 
 function App() {
-  // Set column state
-  const [col, setCol] = useState({
-    mobile: 'col-12',
-    tablet: 'col-sm-6',
-    pc: 'col-xl-4'
-  });
 
-  const handleColView = (value) => {
-    let viewedDevice = value.slice(0, 6);
+  const [state, dispath] = useContext(StoreContext);
 
-    switch (viewedDevice) {
-      case 'col-sm':
-        setCol(prevState => (
-          {
-            ...prevState,
-            tablet: value
-          }
-        ))
-        break;
-      case 'col-xl':
-        setCol(prevState => (
-          {
-            ...prevState,
-            pc: value
-          }
-        ))
-        break;
-      default:
-        setCol({
-          mobile: 'col-12',
-          tablet: 'col-sm-6',
-          pc: 'col-xl-4'
-        })
-    }
-
-  }
 
   return (
     <div className="App">
@@ -53,20 +28,13 @@ function App() {
           </Nav>
           <Nav className="justify-content-end">
             <Nav.Item>
-              <Form.Select aria-label="Default select example" onChange={(e) => handleColView(e.target.value)}>
-                <option value='default'>Chọn định dang cột</option>
-                <option value="col-xl-12">PC - 1 cột</option>
-                <option value="col-xl-4">PC - 3 cột</option>
-                <option value="col-xl-2">PC - 6 cột</option>
-                <option value="col-sm-12">Tablet - 1 cột</option>
-                <option value="col-sm-6">Tablet - 2 cột</option>
-              </Form.Select>
+              <ViewColumn />
             </Nav.Item>
           </Nav>
         </Container>
       </Navbar>
       <Container>
-        <StaffList props={[STAFFS, col]} />
+        <StaffList props={[STAFFS, state]} />
       </Container>
     </div>
   );
