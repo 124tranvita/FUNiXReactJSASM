@@ -15,7 +15,7 @@ function StaffDetail({ getStaff }) {
 
   return (
     <div className="mt-3 mb-5">
-      <Container>
+      <Container style={{ height: "100%" }}>
         {/* Breadcrumb */}
         <div className="col-12 col-sm-6">
           <Breadcrumb className=" border-bottom border-dark mb-1">
