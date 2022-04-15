@@ -1,41 +1,62 @@
 import { useState } from 'react';
-import { Container, Card } from 'react-bootstrap';
-import StaffDetail from './StaffDetailComponent';
+import { Container, Card, Breadcrumb, InputGroup, FormControl } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
-function StaffList({ props }) {
-  // Use destructuring with props - staffs = array | col = object
-  const [staffs, col] = props;
-  // Show StaffDetail Component State
-  const [show, setShow] = useState(false);
-  // Get StaffDetail State
-  const [selectedStaff, setSelectedStaff] = useState({});
+function StaffList({ staffs }) {
 
-  const handleViewStaffDetail = (staff) => {
-    if (selectedStaff.id !== staff.id) {
-      setSelectedStaff(staff);
-      setShow(true);
-    } else {
-      setShow(!show);
-    }
+  const [staffList, setStaffList] = useState(staffs);
+
+  const handleSearchStaff = (searchedStaff) => {
+    return (
+      setStaffList(staffs.filter((staff) => staff.name.includes(searchedStaff))
+      )
+    )
   }
 
   return (
-    <>
+    <div className="mt-3 mb-5">
       <Container>
         <div className="row">
-          {staffs.map((staff) => (
-            <div className={Object.values(col).join(' ')} key={staff.id}>
-              <Card className="my-1" key={staff.id}>
-                <Card.Body onClick={() => handleViewStaffDetail(staff)}>{staff.name}</Card.Body>
-              </Card>
+          <div className="col-12 col-sm-6">
+            <Breadcrumb className=" border-bottom border-dark mb-1">
+              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
+              <Breadcrumb.Item active>Nhân viên</Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+          <div className="col-12 col-sm-6">
+            <div className="row">
+              <div className="col-12 col-xl-6"></div>
+              <div className="col-12 col-xl-6">
+                <InputGroup className="mb-3">
+                  <InputGroup.Text id="inputGroup-sizing-default"><FaSearch /></InputGroup.Text>
+                  <FormControl
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    onChange={(e) => handleSearchStaff(e.target.value)}
+                    placeholder="Tìm kiếm..."
+                  />
+                </InputGroup>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          {staffList.map((staff) => (
+            <div className="col-6 col-sm-4 col-xl-2" key={staff.id}>
+              <Link to={`/staffs/${staff.id}`} className="text-decoration-none text-white">
+                <Card className="my-1 bg-light">
+                  <Card.Img variant="top" src={staff.image} />
+                  <Card.Body className="bg-dark">
+                    <Card.Text>{staff.name}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Link>
             </div>
           ))}
         </div>
-        <div className='row'>
-          {(show && <StaffDetail selectedStaff={selectedStaff} />) || 'Bấm vào tên nhân viên để xem thông tin.'}
-        </div>
       </Container>
-    </>
+    </div>
   )
 }
 
