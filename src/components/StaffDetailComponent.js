@@ -1,11 +1,10 @@
-import { useParams } from 'react-router-dom';
-import { Container, Card } from 'react-bootstrap';
+import { useParams, Link } from 'react-router-dom';
+import { Container, Card, Table, Breadcrumb } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 
 /**
  * Sử dụng useParams để đọc giá trị từ URL (https://reactrouter.com/docs/en/v6/getting-started/tutorial#reading-url-params)
  */
-
 
 function StaffDetail({ getStaff }) {
 
@@ -15,27 +14,61 @@ function StaffDetail({ getStaff }) {
   const [staff] = getStaff(staffId);
 
   return (
-    <Container>
-      <Card className='mb-5'>
-        <Card.Header><strong>{staff.name}</strong>
-        </Card.Header>
-        <Card.Body>
-          <div className='row'>
-            <div className='col-12 col-sm-6 col-xl-4'>
-              <Card.Img src={staff.image} style={{ width: '240px' }} />
+    <div className="mt-3 mb-5">
+      <Container>
+        {/* Breadcrumb */}
+        <div className="col-12 col-sm-6">
+          <Breadcrumb className=" border-bottom border-dark mb-1">
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/staffs" }}>Nhân viên</Breadcrumb.Item>
+            <Breadcrumb.Item active>{staff.name}</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        {/* Breadcrumb */}
+
+        <Card className='m-5'>
+          <Card.Header className="bg-dark text-white"><strong>Thông tin nhân viên</strong>
+          </Card.Header>
+          <Card.Body>
+            <div className='row'>
+              <div className='col-12 col-sm-4 col-xl-3'>
+                <Card.Img src={staff.image} style={{ width: '100%' }} />
+              </div>
+              <div className='col-12 col-sm-8 col-xl-9'>
+                <Table>
+                  <tbody>
+                    <tr>
+                      <td>Họ và tên:</td>
+                      <th>{staff.name}</th>
+                    </tr>
+                    <tr>
+                      <td>Ngày sinh:</td>
+                      <th>{dateFormat(staff.doB, "dd/mm/yyyy")}</th>
+                    </tr>
+                    <tr>
+                      <td>Ngày vào công ty:</td>
+                      <th>{dateFormat(staff.startDate, "dd/mm/yyyy")}</th>
+                    </tr>
+                    <tr>
+                      <td>Phòng ban:</td>
+                      <th>{staff.department.name}</th>
+                    </tr>
+                    <tr>
+                      <td>Số ngày nghỉ còn lại:</td>
+                      <th>{staff.annualLeave}</th>
+                    </tr>
+                    <tr>
+                      <td>Số ngày đã làm thêm:</td>
+                      <th>{staff.overTime}</th>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
             </div>
-            <div className='col-12 col-sm-6 col-xl-8'>
-              <Card.Text>Họ và tên: {staff.name}</Card.Text>
-              <Card.Text>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</Card.Text>
-              <Card.Text>Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}</Card.Text>
-              <Card.Text>Phòng ban: {staff.department.name}</Card.Text>
-              <Card.Text>Số ngày nghỉ còn lại: {staff.annualLeave}</Card.Text>
-              <Card.Text>Số ngày đã làm thêm: {staff.overTime}</Card.Text>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
-    </Container>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   )
 }
 

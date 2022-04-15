@@ -17,7 +17,6 @@ function Main() {
 
   return (
     <div>
-      <div className='row bg-black'>dsa</div>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
