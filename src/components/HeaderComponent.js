@@ -5,7 +5,7 @@ import { IoIosPeople } from 'react-icons/io';
 
 function Header() {
   return (
-    <>
+    <div className="row">
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand href="/home">
@@ -34,7 +34,7 @@ function Header() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
+    </div>
   )
 }
 

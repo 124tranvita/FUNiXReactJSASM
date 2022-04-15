@@ -18,12 +18,16 @@ function StaffList({ staffs }) {
     <div className="mt-3 mb-5">
       <Container>
         <div className="row">
+          {/* Breadcrumb */}
           <div className="col-12 col-sm-6">
             <Breadcrumb className=" border-bottom border-dark mb-1">
               <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
               <Breadcrumb.Item active>Nhân viên</Breadcrumb.Item>
             </Breadcrumb>
           </div>
+          {/* Breadcrumb */}
+
+          {/* Staff Search */}
           <div className="col-12 col-sm-6">
             <div className="row">
               <div className="col-12 col-xl-6"></div>
@@ -40,7 +44,10 @@ function StaffList({ staffs }) {
               </div>
             </div>
           </div>
+          {/* Staff Search */}
         </div>
+
+        {/* Display List of Staff */}
         <div className="row">
           {staffList.map((staff) => (
             <div className="col-6 col-sm-4 col-xl-2" key={staff.id}>
@@ -55,6 +62,7 @@ function StaffList({ staffs }) {
             </div>
           ))}
         </div>
+        {/* Display List of Staff */}
       </Container>
     </div>
   )

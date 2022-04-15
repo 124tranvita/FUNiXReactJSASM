@@ -2,7 +2,7 @@ import { FaHome, FaEnvelope, FaPhoneSquareAlt, FaPrint } from 'react-icons/fa';
 
 function Footer() {
   return (
-    <footer className="footer-wrapper">
+    <footer className="row footer">
       <div className="bg-dark text-center text-lg-start text-white">
         <div className="row">
           <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
