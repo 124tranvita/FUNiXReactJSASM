@@ -20,9 +20,9 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <NavLink className="nav-link" to="/home"><FaHome /> Trang chủ</NavLink>
+              <NavLink className="nav-link" to="/"><FaHome /> Trang chủ</NavLink>
               <NavLink className="nav-link" to="/staffs"><IoIosPeople /> Nhân viên</NavLink>
-              <Nav.Link href="/home"><FaAddressCard /> Phòng ban</Nav.Link>
+              <NavLink className="nav-link" to="/departments"><FaAddressCard /> Phòng ban</NavLink>
               <Nav.Link href="/home"><FaMoneyBillAlt /> Bảng lương</Nav.Link>
             </Nav>
             <Nav>
