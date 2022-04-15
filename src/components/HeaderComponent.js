@@ -23,7 +23,7 @@ function Header() {
               <NavLink className="nav-link" to="/"><FaHome /> Trang chủ</NavLink>
               <NavLink className="nav-link" to="/staffs"><IoIosPeople /> Nhân viên</NavLink>
               <NavLink className="nav-link" to="/departments"><FaAddressCard /> Phòng ban</NavLink>
-              <Nav.Link href="/home"><FaMoneyBillAlt /> Bảng lương</Nav.Link>
+              <NavLink className="nav-link" to="/salaries"><FaMoneyBillAlt /> Bảng lương</NavLink>
             </Nav>
             <Nav>
               <Nav.Link href="#deets">Login</Nav.Link>

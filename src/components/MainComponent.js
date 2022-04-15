@@ -6,6 +6,7 @@ import StaffList from './StaffListComponent';
 import StaffDetail from './StaffDetailComponent';
 import Departments from './DepartmentsComponent';
 import DepartmentStaff from './DepartmentStaffsComponent';
+import Salaries from './SalariesComponent';
 import Test from './TestComponent';
 import { PageNotFound } from './PageErrorComponent';
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
@@ -30,7 +31,7 @@ function Main() {
         <Route path="staffs/:staffId" element={<StaffDetail getStaff={getStaff} />} />
         <Route path="departments" element={<Departments departments={DEPARTMENTS} />} />
         <Route path="departments/:departmentId" element={<DepartmentStaff getDepartmentStaffs={getDepartmentStaffs} />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="salaries" element={<Salaries staffs={STAFFS} />} />
         {/* "No match" route case */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>

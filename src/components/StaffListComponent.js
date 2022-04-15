@@ -19,7 +19,7 @@ function StaffList({ staffs }) {
         <div className="row">
           {/* Breadcrumb */}
           <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-light mb-1">
+            <Breadcrumb className=" border-bottom border-dark mb-1">
               <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
               <Breadcrumb.Item active>Nhân viên</Breadcrumb.Item>
             </Breadcrumb>
@@ -49,7 +49,7 @@ function StaffList({ staffs }) {
         {/* Display List of Staff */}
         <div className="row text-center">
           {staffList.map((staff) => (
-            <div className="col-6 col-sm-4 col-xl-2" key={staff.id}>
+            <div className="col-6 col-sm-4 col-xl-2" key={staff.id} >
               <Link to={`/staffs/${staff.id}`} className="text-decoration-none text-white">
                 <Card className="my-1 bg-light">
                   <Card.Img variant="top" src={staff.image} />
@@ -62,8 +62,8 @@ function StaffList({ staffs }) {
           ))}
         </div>
         {/* Display List of Staff */}
-      </Container>
-    </div>
+      </Container >
+    </div >
   )
 }
 

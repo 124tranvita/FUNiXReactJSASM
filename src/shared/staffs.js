@@ -205,7 +205,7 @@ export const STAFFS =
       startDate: "2019-04-30T08:59:00.000Z",
       department: DEPARTMENTS[4],
       annualLeave: 9,
-      overTime: 10,
+      overTime: 8,
       image: '/assets/images/employee.svg',
     },
 

@@ -18,7 +18,7 @@ function StaffDetail({ getStaff }) {
       <Container>
         {/* Breadcrumb */}
         <div className="col-12 col-sm-6">
-          <Breadcrumb className=" border-bottom border-light mb-1">
+          <Breadcrumb className=" border-bottom border-dark mb-1">
             <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
             <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/staffs" }}>Nhân viên</Breadcrumb.Item>
             <Breadcrumb.Item active>{staff.name}</Breadcrumb.Item>

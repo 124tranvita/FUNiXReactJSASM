@@ -17,7 +17,7 @@ function Departments({ departments }) {
         <div className="row">
           {/* Breadcrumb */}
           <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-light mb-1">
+            <Breadcrumb className=" border-bottom border-dark mb-1">
               <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
               <Breadcrumb.Item active>Phòng ban</Breadcrumb.Item>
             </Breadcrumb>
@@ -48,15 +48,15 @@ function Departments({ departments }) {
         <div className="row">
           {departmentList.map((department) => (
             <div className="col-12 col-sm-6 col-xl-4" key={department.id}>
-              <Card className="m-4 p-2 bg-dark">
+              <Card className="m-4">
                 <Card.Img
                   variant="top"
                   src="/assets/images/department.svg"
                   style={{ width: '120px', margin: "auto" }}
                   alt={department.name}
-                  className="rounded-circle mb-2"
+                  className="rounded-circle mb-2 mt-2"
                 />
-                <Card.Body className="text-white">
+                <Card.Body className="text-white bg-dark">
                   <Card.Title>{department.name}</Card.Title>
                   <Card.Text>
                     Số lượng nhân viên: <span>{department.numberOfStaff}</span>
