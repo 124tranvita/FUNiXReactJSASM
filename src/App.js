@@ -6,7 +6,7 @@ import Main from './components/MainComponent';
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div className="row bg-dark">
         <Main />
       </div>
     </BrowserRouter>

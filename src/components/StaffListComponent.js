@@ -7,12 +7,11 @@ function StaffList({ staffs }) {
 
   const [staffList, setStaffList] = useState(staffs);
 
-  const handleSearchStaff = (searchedStaff) => {
-    return (
-      setStaffList(staffs.filter((staff) => staff.name.includes(searchedStaff))
-      )
+  const handleSearchStaff = (searchedStaff) => (
+    setStaffList(staffs.filter((staff) => staff.name.includes(searchedStaff))
     )
-  }
+  )
+
 
   return (
     <div className="mt-3 mb-5">
@@ -20,7 +19,7 @@ function StaffList({ staffs }) {
         <div className="row">
           {/* Breadcrumb */}
           <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-dark mb-1">
+            <Breadcrumb className=" border-bottom border-light mb-1">
               <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
               <Breadcrumb.Item active>Nhân viên</Breadcrumb.Item>
             </Breadcrumb>
