@@ -8,7 +8,7 @@ function Salaries({ staffs }) {
   const [staffList, setStaffList] = useState(staffs);
 
   const handleSearchStaff = (searchedStaff) => (
-    setStaffList(staffs.filter((staff) => staff.name.includes(searchedStaff))
+    setStaffList(staffs.filter((staff) => (staff.name.includes(searchedStaff) || staff.id == searchedStaff))
     )
   )
 
@@ -33,19 +33,27 @@ function Salaries({ staffs }) {
     }
   }
 
-  const salariesSort = (staffs) => {
-    const staffSalaries = staffs.map((staff) => {
+  const salariesSort = (sortType) => {
+    const staffSalaries = staffList.map((staff) => {
       return {
         ...staff,
         salary: (staff.salaryScale * 3000000 + staff.overTime * 200000).toFixed(0)
       }
     })
 
-    staffSalaries.sort((a, b) => a.salary - b.salary);
+    switch (sortType) {
+      case "salaryAsc":
+        staffSalaries.sort((a, b) => a.salary - b.salary);
+        break;
+      case "salaryDes":
+        staffSalaries.sort((a, b) => b.salary - a.salary);
+        break;
+      default:
+        throw new Error("Sort Error!");
+    }
 
-    console.log(staffSalaries)
+    return staffSalaries
   }
-  salariesSort(staffList);
 
   return (
     <div className="mt-3 mb-5">
@@ -75,14 +83,14 @@ function Salaries({ staffs }) {
 
               {/* Filter */}
               <div className="col-12 col-xl-2">
-                <Dropdown>
+                <Dropdown onSelect={(eventKey) => setStaffList(salariesSort(eventKey))}>
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
                     <FaFilter />
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                    <Dropdown.Item eventKey="salaryAsc">Lương tăng dần</Dropdown.Item>
+                    <Dropdown.Item eventKey="salaryDes">Lương giảm dần</Dropdown.Item>
                     <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
