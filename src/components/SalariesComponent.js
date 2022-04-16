@@ -48,6 +48,12 @@ function Salaries({ staffs }) {
       case "salaryDes":
         staffSalaries.sort((a, b) => b.salary - a.salary);
         break;
+      case "idAsc":
+        staffSalaries.sort((a, b) => a.id - b.id);
+        break;
+      case "idDes":
+        staffSalaries.sort((a, b) => b.id - a.id);
+        break;
       default:
         throw new Error("Sort Error!");
     }
@@ -91,7 +97,8 @@ function Salaries({ staffs }) {
                   <Dropdown.Menu>
                     <Dropdown.Item eventKey="salaryAsc">Lương tăng dần</Dropdown.Item>
                     <Dropdown.Item eventKey="salaryDes">Lương giảm dần</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                    <Dropdown.Item eventKey="idAsc">Mã NV tăng dần</Dropdown.Item>
+                    <Dropdown.Item eventKey="idDes">Mã NV giảm dần</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
