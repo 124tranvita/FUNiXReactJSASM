@@ -26,10 +26,10 @@ function Header() {
               <NavLink className="nav-link" to="/salaries"><FaMoneyBillAlt /> Bảng lương</NavLink>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">Login</Nav.Link>
-              <Nav.Link href="#memes">
-                Register
-              </Nav.Link>
+              <Nav.Link className="nav-link">Login</Nav.Link>
+              <NavLink className="nav-link" to="/test">
+                Go to Test
+              </NavLink>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -42,7 +42,7 @@ class HomeBreadcrumb extends Component {
       } else {
         return (
           <>
-            <p>Có lỗi xảy ra, kiểm tra lại props!</p>
+            <p>Có lỗi xảy ra, kiểm tra lại props "links, active"!</p>
           </>
         )
       }

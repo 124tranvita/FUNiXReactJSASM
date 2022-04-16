@@ -32,6 +32,8 @@ function Main() {
         <Route path="departments" element={<Departments departments={DEPARTMENTS} />} />
         <Route path="departments/:deptId" element={<DepartmentStaff getDepartmentStaffs={getDepartmentStaffs} />} />
         <Route path="salaries" element={<Salaries staffs={STAFFS} />} />
+        {/* Test Component */}
+        <Route path="test" element={<Test staffs={STAFFS} />} />
         {/* "No match" route case */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
