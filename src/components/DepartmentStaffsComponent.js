@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useParams, Link } from "react-router-dom";
 import { Container, Card, Breadcrumb, InputGroup, FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
+import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
 function DepartmentStaff({ getDepartmentStaffs }) {
   let params = useParams();
-  let departmentId = params.departmentId;
+  let deptId = params.deptId;
 
-  const staffs = getDepartmentStaffs(departmentId);
+  const staffs = getDepartmentStaffs(deptId);
 
   const [staffList, setStaffList] = useState(staffs);
 
@@ -23,13 +24,15 @@ function DepartmentStaff({ getDepartmentStaffs }) {
       <Container>
         <div className="row">
           {/* Breadcrumb */}
-          <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-dark mb-1">
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/departments" }}>Phòng ban</Breadcrumb.Item>
-              <Breadcrumb.Item active>Nhân viên</Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
+          <HomeBreadcrumb
+            links={[
+              {
+                to: "/departments",
+                name: "Phòng ban"
+              }
+            ]}
+            active={"Nhân Viên"}
+          />
           {/* Breadcrumb */}
 
           {/* Staff Search */}

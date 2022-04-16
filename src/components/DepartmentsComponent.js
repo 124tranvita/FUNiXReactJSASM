@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button, Container, Breadcrumb, InputGroup, FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
+import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
 function Departments({ departments }) {
 
@@ -16,12 +17,7 @@ function Departments({ departments }) {
       <Container>
         <div className="row">
           {/* Breadcrumb */}
-          <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-dark mb-1">
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
-              <Breadcrumb.Item active>Phòng ban</Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
+          <HomeBreadcrumb active="Phòng ban" />
           {/* Breadcrumb */}
 
           {/* Deparment Search */}

@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Container, Card, Breadcrumb, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Card, InputGroup, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
+import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
 function StaffList({ staffs }) {
 
@@ -12,18 +13,12 @@ function StaffList({ staffs }) {
     )
   )
 
-
   return (
     <div className="mt-3 mb-5">
       <Container>
         <div className="row">
           {/* Breadcrumb */}
-          <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-dark mb-1">
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
-              <Breadcrumb.Item active>Nhân viên</Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
+          <HomeBreadcrumb active={"Nhân viên"} />
           {/* Breadcrumb */}
 
           {/* Staff Search */}

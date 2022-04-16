@@ -30,7 +30,7 @@ function Main() {
         <Route path="staffs" element={<StaffList staffs={STAFFS} />} />
         <Route path="staffs/:staffId" element={<StaffDetail getStaff={getStaff} />} />
         <Route path="departments" element={<Departments departments={DEPARTMENTS} />} />
-        <Route path="departments/:departmentId" element={<DepartmentStaff getDepartmentStaffs={getDepartmentStaffs} />} />
+        <Route path="departments/:deptId" element={<DepartmentStaff getDepartmentStaffs={getDepartmentStaffs} />} />
         <Route path="salaries" element={<Salaries staffs={STAFFS} />} />
         {/* "No match" route case */}
         <Route path="*" element={<PageNotFound />} />

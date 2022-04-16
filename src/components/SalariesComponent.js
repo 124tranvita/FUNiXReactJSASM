@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Card, Table, Breadcrumb, InputGroup, FormControl } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
+import { Container, Card, Table, InputGroup, FormControl, Button, Dropdown } from 'react-bootstrap';
+import { FaSearch, FaFilter } from 'react-icons/fa';
+import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
 function Salaries({ staffs }) {
 
@@ -33,23 +33,33 @@ function Salaries({ staffs }) {
     }
   }
 
+  const salariesSort = (staffs) => {
+    const staffSalaries = staffs.map((staff) => {
+      return {
+        ...staff,
+        salary: (staff.salaryScale * 3000000 + staff.overTime * 200000).toFixed(0)
+      }
+    })
+
+    staffSalaries.sort((a, b) => a.salary - b.salary);
+
+    console.log(staffSalaries)
+  }
+  salariesSort(staffList);
+
   return (
     <div className="mt-3 mb-5">
       <Container>
         <div className="row">
           {/* Breadcrumb */}
-          <div className="col-12 col-sm-6">
-            <Breadcrumb className=" border-bottom border-dark mb-1">
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
-              <Breadcrumb.Item active>Bảng lương</Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
+          <HomeBreadcrumb active={"Bảng lương"} />
           {/* Breadcrumb */}
 
-          {/* Staff Search */}
+          {/* Staff Search - Filter*/}
           <div className="col-12 col-sm-6">
             <div className="row">
-              <div className="col-12 col-xl-6"></div>
+              <div className="col-12 col-xl-4"></div>
+              {/* Staff Search */}
               <div className="col-12 col-xl-6">
                 <InputGroup className="mb-3">
                   <InputGroup.Text id="inputGroup-sizing-default"><FaSearch /></InputGroup.Text>
@@ -61,14 +71,31 @@ function Salaries({ staffs }) {
                   />
                 </InputGroup>
               </div>
+              {/* Staff Search */}
+
+              {/* Filter */}
+              <div className="col-12 col-xl-2">
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <FaFilter />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              {/* Filter */}
             </div>
           </div>
-          {/* Staff Search */}
+          {/* Staff Search - Filter */}
         </div>
 
         <div className="row">
           {staffList.map((staff) => (
-            <div className="col-12 col-sm-6 col-xl-4">
+            <div className="col-12 col-sm-6 col-xl-4" key={staff.id}>
               <Card className="m-2">
                 <Card.Header className="bg-dark text-white">
                   <Card.Title>{staff.name}</Card.Title>

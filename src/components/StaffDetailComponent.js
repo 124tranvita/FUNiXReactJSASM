@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Container, Card, Table, Breadcrumb } from 'react-bootstrap';
 import dateFormat from 'dateformat';
+import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
 /**
  * Sử dụng useParams để đọc giá trị từ URL (https://reactrouter.com/docs/en/v6/getting-started/tutorial#reading-url-params)
@@ -17,13 +18,12 @@ function StaffDetail({ getStaff }) {
     <div className="mt-3 mb-5">
       <Container style={{ height: "100%" }}>
         {/* Breadcrumb */}
-        <div className="col-12 col-sm-6">
-          <Breadcrumb className=" border-bottom border-dark mb-1">
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Trang chủ</Breadcrumb.Item>
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/staffs" }}>Nhân viên</Breadcrumb.Item>
-            <Breadcrumb.Item active>{staff.name}</Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
+        <HomeBreadcrumb links={[
+          {
+            to: "/staffs",
+            name: "Nhân viên"
+          }
+        ]} active={staff.name} />
         {/* Breadcrumb */}
 
         <Card className='m-5'>
