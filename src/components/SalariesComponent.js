@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Card, Table, InputGroup, FormControl, Button, Dropdown } from 'react-bootstrap';
+import { Container, Card, Table, InputGroup, FormControl, Dropdown } from 'react-bootstrap';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
@@ -8,7 +8,7 @@ function Salaries({ staffs }) {
   const [staffList, setStaffList] = useState(staffs);
 
   const handleSearchStaff = (searchedStaff) => (
-    setStaffList(staffs.filter((staff) => (staff.name.includes(searchedStaff) || staff.id == searchedStaff))
+    setStaffList(staffs.filter((staff) => (staff.name.includes(searchedStaff) || staff.id === parseInt(searchedStaff)))
     )
   )
 

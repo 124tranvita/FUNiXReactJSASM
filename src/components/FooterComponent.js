@@ -1,4 +1,4 @@
-import { FaHome, FaEnvelope, FaPhoneSquareAlt, FaPrint } from 'react-icons/fa';
+import { FaEnvelope } from 'react-icons/fa';
 import { BsFacebook, BsInstagram, BsTwitter, BsGithub } from 'react-icons/bs';
 import { Container } from 'react-bootstrap';
 

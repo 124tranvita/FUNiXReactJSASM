@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from "react-router-dom";
-import { Container, Card, Breadcrumb, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Card, InputGroup, FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
