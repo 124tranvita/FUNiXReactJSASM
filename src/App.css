@@ -37,3 +37,14 @@
     transform: rotate(360deg);
   }
 }
+
+.breadcrumb-item > a {
+  color: #212529 !important;
+}
+
+footer {
+  position: "fixed";
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
