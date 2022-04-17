@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 
 function Footer() {
   return (
-    <footer className="row bg-dark text-white p-4 text-center">
+    <footer className="row bg-dark text-white pt-4 pb-2 text-center">
       <Container>
         <div className="row">
           <h6 className="text-uppercase mb-4 font-weight-bold">

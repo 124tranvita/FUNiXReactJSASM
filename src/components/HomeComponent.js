@@ -2,6 +2,7 @@ import { Container, Card, Button } from 'react-bootstrap';
 import { FaRegBuilding, FaMoneyCheckAlt } from 'react-icons/fa';
 import { BsPeopleFill } from 'react-icons/bs';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
+import { StaffBarChart } from './ChartComponent';
 
 function Home({ props }) {
 
@@ -93,6 +94,15 @@ function Home({ props }) {
             </Card>
           </div>
           {/* Salary Card*/}
+        </div>
+      </Container>
+
+      <Container>
+        <hr className="my-4" />
+        <div className="row">
+          <div className="col-12 col-sm-6 p-1">
+            <StaffBarChart />
+          </div>
         </div>
       </Container>
     </div>
