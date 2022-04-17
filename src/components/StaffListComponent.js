@@ -57,8 +57,8 @@ function StaffList({ staffs }) {
           ))}
         </div>
         {/* Display List of Staff */}
-      </Container >
-    </div >
+      </Container>
+    </div>
   )
 }
 

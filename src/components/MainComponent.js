@@ -26,7 +26,7 @@ function Main() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home props={[STAFFS, DEPARTMENTS]} />} />
         <Route path="staffs" element={<StaffList staffs={STAFFS} />} />
         <Route path="staffs/:staffId" element={<StaffDetail getStaff={getStaff} />} />
         <Route path="departments" element={<Departments departments={DEPARTMENTS} />} />
