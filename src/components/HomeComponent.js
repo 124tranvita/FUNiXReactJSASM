@@ -2,7 +2,7 @@ import { Container, Card, Button } from 'react-bootstrap';
 import { FaRegBuilding, FaMoneyCheckAlt } from 'react-icons/fa';
 import { BsPeopleFill } from 'react-icons/bs';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
-import { StaffBarChart } from './ChartComponent';
+import { StaffBarChart, DeptsBudgetPieChart } from './ChartComponent';
 
 function Home({ props }) {
 
@@ -102,6 +102,9 @@ function Home({ props }) {
         <div className="row">
           <div className="col-12 col-sm-6 p-1">
             <StaffBarChart />
+          </div>
+          <div className='col-12 col-sm-6 p-1'>
+            <DeptsBudgetPieChart />
           </div>
         </div>
       </Container>
