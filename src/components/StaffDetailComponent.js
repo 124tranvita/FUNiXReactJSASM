@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Container, Card, Table } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
+import { OverTime } from '../shared/data';
 
 /**
  * Sử dụng useParams để đọc giá trị từ URL (https://reactrouter.com/docs/en/v6/getting-started/tutorial#reading-url-params)
@@ -15,7 +16,7 @@ function StaffDetail({ getStaff }) {
   const [staff] = getStaff(staffId);
 
   return (
-    <div className="mt-3 mb-5">
+    <div className="mt-3 mb-5" style={{ height: "70vh" }}>
       <Container style={{ height: "100%" }}>
         {/* Breadcrumb */}
         <HomeBreadcrumb links={[
@@ -55,11 +56,11 @@ function StaffDetail({ getStaff }) {
                     </tr>
                     <tr>
                       <td>Số ngày nghỉ còn lại:</td>
-                      <th>{staff.annualLeave}</th>
+                      <th>{staff.annualLeave} ngày</th>
                     </tr>
                     <tr>
                       <td>Số ngày đã làm thêm:</td>
-                      <th>{staff.overTime}</th>
+                      <th><OverTime times={staff.overTime} /></th>
                     </tr>
                   </tbody>
                 </Table>

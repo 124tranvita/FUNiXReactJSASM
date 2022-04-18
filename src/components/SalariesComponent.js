@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Container, Card, Table, InputGroup, FormControl, Dropdown } from 'react-bootstrap';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
+import { OverTime } from '../shared/data';
 
 function Salaries({ staffs }) {
 
@@ -13,24 +14,14 @@ function Salaries({ staffs }) {
   )
 
   const Salary = ({ staff }) => {
+    let vnd = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+
     const calSalary = staff.salaryScale * 3000000 + staff.overTime * 200000;
     return (
       <>
-        <h3>{calSalary.toFixed(0)}$</h3>
+        <h3>{vnd.format(calSalary.toFixed(0))}</h3>
       </>
     )
-  }
-
-  const OverTime = ({ times }) => {
-    if (times < 8) {
-      return (
-        <>{times} giờ</>
-      )
-    } else {
-      return (
-        <>{(times / 8).toFixed(0)} ngày {times % 8} giờ</>
-      )
-    }
   }
 
   const salariesSort = (sortType) => {

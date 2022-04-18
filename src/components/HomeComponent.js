@@ -1,4 +1,4 @@
-import { Container, Card, Button } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import { FaRegBuilding, FaMoneyCheckAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { BsPeopleFill } from 'react-icons/bs';

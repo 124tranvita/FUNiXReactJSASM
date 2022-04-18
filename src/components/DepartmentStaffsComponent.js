@@ -20,7 +20,7 @@ function DepartmentStaff({ getDepartmentStaffs }) {
   }
 
   return (
-    <div className="mt-3 mb-5">
+    <div className="mt-3 mb-5" style={{ height: "70vh" }}>
       <Container>
         <div className="row">
           {/* Breadcrumb */}
