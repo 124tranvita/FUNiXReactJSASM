@@ -13,6 +13,7 @@ function Salaries({ staffs }) {
     )
   )
 
+  // React Element to display staff's salary
   const Salary = ({ staff }) => {
     let vnd = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
 
@@ -24,6 +25,7 @@ function Salaries({ staffs }) {
     )
   }
 
+  // Sorting function
   const salariesSort = (sortType) => {
     const staffSalaries = staffList.map((staff) => {
       return {

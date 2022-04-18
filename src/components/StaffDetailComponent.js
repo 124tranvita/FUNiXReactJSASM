@@ -2,17 +2,19 @@ import { useParams, Link } from 'react-router-dom';
 import { Container, Card, Table } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
-import { OverTime } from '../shared/data';
+import { OverTime, getStaff } from '../shared/data';
 
 /**
  * Sử dụng useParams để đọc giá trị từ URL (https://reactrouter.com/docs/en/v6/getting-started/tutorial#reading-url-params)
  */
 
-function StaffDetail({ getStaff }) {
+function StaffDetail() {
 
+  // Declare useParams() variable to take the params from URL
   let params = useParams();
   let staffId = parseInt(params.staffId, 10);
-  // Filter trả về 1 mảng -> dùng Destructuring để lấy giá trị trong mảng (thông tin staff)
+
+  // Use array destructuring to unpack value from getStaff() - getStaff() return an array with only one value (array: [selected staff])
   const [staff] = getStaff(staffId);
 
   return (

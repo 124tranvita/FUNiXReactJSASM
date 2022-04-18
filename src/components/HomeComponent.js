@@ -7,6 +7,7 @@ import { StaffBarChart, DeptsBudgetPieChart } from './ChartComponent';
 
 function Home({ props }) {
 
+  // Use array destructuring to unpack value from props
   const [staffs, departments] = props;
 
   return (
@@ -104,6 +105,7 @@ function Home({ props }) {
         </div>
       </Container>
 
+      {/* Chart Area */}
       <Container>
         <hr className="my-4" />
         <div className="row">
@@ -115,6 +117,7 @@ function Home({ props }) {
           </div>
         </div>
       </Container>
+      {/* Chart Area */}
     </div>
   )
 }

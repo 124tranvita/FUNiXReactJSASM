@@ -3,10 +3,10 @@ import { Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /**
- * BREADCRUMB COMPONENT
+ * HOMEBREADCRUMB COMPONENT
  * Nhận vào 2 props là {links} và {active}
  * Links dùng để hiển thị các nhánh của Breadcrumb (Ví dụ: Home/Link1/Link2/Link3/...)
- * Active dùng để hiển thị item cuối cùng của Breadcrumb (Ví dụ: Home/Link1/Link2/...../Employee)
+ * Active dùng để hiển thị item cuối cùng của Breadcrumb (Ví dụ: Home/Link1/Link2/...../Active)
  * Item đầu tiên của Breadcrumb sẽ mặc đinh là Home ("/")
  */
 

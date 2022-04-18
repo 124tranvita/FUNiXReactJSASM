@@ -3,12 +3,15 @@ import { useParams, Link } from "react-router-dom";
 import { Container, Card, InputGroup, FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
+import { getDepartmentStaffs } from '../shared/data';
 
-function DepartmentStaff({ getDepartmentStaffs }) {
+function DepartmentStaff() {
+
+  // Declare useParams() variable to take the params from URL
   let params = useParams();
   let deptId = params.deptId;
 
-  const staffs = getDepartmentStaffs(deptId);
+  const staffs = getDepartmentStaffs(deptId); // {staffs} is an array because one deparment can have multi staffs belong to
 
   const [staffList, setStaffList] = useState(staffs);
 
