@@ -89,8 +89,8 @@ function Home({ props }) {
                           4$
                         </h1>
                       </Card.Title>
-                      <Card.Text>
-                        Tổng Chi
+                      <Card.Text className="text-muted">
+                        Tổng Chi (In-completed)
                       </Card.Text>
                     </div>
                     <div className="col-4">

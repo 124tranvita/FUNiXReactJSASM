@@ -4,6 +4,12 @@ import { FaSearch, FaFilter } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
 import { OverTime } from '../shared/data';
 
+/*
+* Công thức tính lương: salaryScale * 3000000 + overTime * 200000. 
+* Trong đó, số giờ làm thêm cần được quy đổi ra đơn vị ngày bằng cách chia cho 8h/ngày (tức là 200000 cho 8h làm thêm).
+* => 1 giờ làm thêm = 25000
+*/
+
 function Salaries({ staffs }) {
 
   const [staffList, setStaffList] = useState(staffs);
@@ -17,7 +23,7 @@ function Salaries({ staffs }) {
   const Salary = ({ staff }) => {
     let vnd = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
 
-    const calSalary = staff.salaryScale * 3000000 + staff.overTime * 200000;
+    const calSalary = staff.salaryScale * 3000000 + staff.overTime * 25000;
     return (
       <>
         <h3>{vnd.format(calSalary.toFixed(0))}</h3>
@@ -30,7 +36,7 @@ function Salaries({ staffs }) {
     const staffSalaries = staffList.map((staff) => {
       return {
         ...staff,
-        salary: (staff.salaryScale * 3000000 + staff.overTime * 200000).toFixed(0)
+        salary: (staff.salaryScale * 3000000 + staff.overTime * 25000).toFixed(0)
       }
     })
 
