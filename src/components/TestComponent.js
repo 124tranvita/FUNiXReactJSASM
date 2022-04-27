@@ -1,6 +1,7 @@
 import { Container } from 'react-bootstrap';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
 import { StaffBarChart, DeptsBudgetPieChart } from './ChartComponent';
+import AddStaff from './AddStaffComponent';
 
 /**
  * Sử dụng useParams để đọc giá trị từ URL (https://reactrouter.com/docs/en/v6/getting-started/tutorial#reading-url-params)
@@ -19,6 +20,7 @@ function Test() {
           active="Test Page" />
 
         <h1>Test Component</h1>
+        <AddStaff />
         <div className="row">
           <div className='col-12 col-sm-6 p-1'>
             <StaffBarChart />
