@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Container, Card, InputGroup, FormControl } from 'react-bootstrap';
+import { useState, useRef } from 'react';
+import { Container, Card, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
@@ -7,11 +7,16 @@ import HomeBreadcrumb from './HomeBreadcrumbComponent';
 function StaffList({ staffs }) {
 
   const [staffList, setStaffList] = useState(staffs);
+  const searchInput = useRef();
 
-  const handleSearchStaff = (searchedStaff) => (
-    setStaffList(staffs.filter((staff) => staff.name.includes(searchedStaff))
-    )
-  )
+  // Uncontrolled Form
+  const handleSearch = () => {
+    //console.log(searchInput.current.value);
+    const searchValue = searchInput.current.value;
+    const filteredStaffList = staffs.filter((staff) => staff.name.toLowerCase().includes(searchValue.toLowerCase()));
+
+    setStaffList(filteredStaffList);
+  }
 
   return (
     <div className="mt-3 mb-5">
@@ -27,13 +32,15 @@ function StaffList({ staffs }) {
               <div className="col-12 col-xl-6"></div>
               <div className="col-12 col-xl-6">
                 <InputGroup className="mb-3">
-                  <InputGroup.Text id="inputGroup-sizing-default"><FaSearch /></InputGroup.Text>
                   <FormControl
-                    aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default"
-                    onChange={(e) => handleSearchStaff(e.target.value)}
-                    placeholder="Tìm kiếm..."
+                    placeholder="Tên nhân viên..."
+                    aria-label="staff's name"
+                    aria-describedby="basic-addon2"
+                    ref={searchInput}
                   />
+                  <Button variant="outline-secondary" id="button-addon2" onClick={handleSearch}>
+                    <FaSearch />
+                  </Button>
                 </InputGroup>
               </div>
             </div>
