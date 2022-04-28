@@ -1,15 +1,14 @@
-import { useParams, Link } from 'react-router-dom';
-import { Container, Card, Table } from 'react-bootstrap';
-import dateFormat from 'dateformat';
-import HomeBreadcrumb from './HomeBreadcrumbComponent';
-import { OverTime, getStaff } from '../shared/data';
+import { useParams, Link } from "react-router-dom";
+import { Container, Card, Table } from "react-bootstrap";
+import dateFormat from "dateformat";
+import HomeBreadcrumb from "./HomeBreadcrumbComponent";
+import { OverTime, getStaff } from "../shared/data";
 
 /**
  * Sử dụng useParams để đọc giá trị từ URL (https://reactrouter.com/docs/en/v6/getting-started/tutorial#reading-url-params)
  */
 
 function StaffDetail() {
-
   // Declare useParams() variable to take the params from URL
   let params = useParams();
   let staffId = parseInt(params.staffId, 10);
@@ -21,23 +20,27 @@ function StaffDetail() {
     <div className="mt-3 mb-5" style={{ height: "70vh" }}>
       <Container style={{ height: "100%" }}>
         {/* Breadcrumb */}
-        <HomeBreadcrumb links={[
-          {
-            to: "/staffs",
-            name: "Nhân viên"
-          }
-        ]} active={staff.name} />
+        <HomeBreadcrumb
+          links={[
+            {
+              to: "/staffs",
+              name: "Nhân viên",
+            },
+          ]}
+          active={staff.name}
+        />
         {/* Breadcrumb */}
 
-        <Card className='m-5'>
-          <Card.Header className="bg-dark text-white"><strong>Thông tin nhân viên</strong>
+        <Card className="m-5">
+          <Card.Header className="bg-dark text-white">
+            <strong>Thông tin nhân viên</strong>
           </Card.Header>
           <Card.Body>
-            <div className='row'>
-              <div className='col-12 col-sm-4 col-xl-3'>
-                <Card.Img src={staff.image} style={{ width: '100%' }} />
+            <div className="row">
+              <div className="col-12 col-sm-4 col-xl-3">
+                <Card.Img src={staff.image} style={{ width: "100%" }} />
               </div>
-              <div className='col-12 col-sm-8 col-xl-9'>
+              <div className="col-12 col-sm-8 col-xl-9">
                 <Table>
                   <tbody>
                     <tr>
@@ -54,7 +57,11 @@ function StaffDetail() {
                     </tr>
                     <tr>
                       <td>Phòng ban:</td>
-                      <th><Link to="/departments">{staff.department.name}</Link></th>
+                      <th>
+                        <Link to="/departments">
+                          {staff.department.name || staff.department}
+                        </Link>
+                      </th>
                     </tr>
                     <tr>
                       <td>Số ngày nghỉ còn lại:</td>
@@ -62,7 +69,9 @@ function StaffDetail() {
                     </tr>
                     <tr>
                       <td>Số ngày đã làm thêm:</td>
-                      <th><OverTime times={staff.overTime} /></th>
+                      <th>
+                        <OverTime times={staff.overTime} />
+                      </th>
                     </tr>
                   </tbody>
                 </Table>
@@ -72,7 +81,7 @@ function StaffDetail() {
         </Card>
       </Container>
     </div>
-  )
+  );
 }
 
-export default StaffDetail
+export default StaffDetail;

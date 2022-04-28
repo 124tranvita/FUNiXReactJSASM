@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import dateFormat from 'dateformat';
+import { Modal, Button, Form, Card } from "react-bootstrap";
+import dateFormat from "dateformat";
 
 let date = new Date();
-date = dateFormat(date, "yyyy-mm-dd")
+date = dateFormat(date, "yyyy-mm-dd");
 
 function AddStaff({ currentStaffList }) {
   // Get the staff list from the localStorage
@@ -15,18 +15,20 @@ function AddStaff({ currentStaffList }) {
 
   // localStorage staff list state (if localStorage === null => use empty array [])
   const [staffs, setStaffs] = useState(storageStaffs ?? []);
-
+  console.log(staffs);
   /**
    * Set Staff's ID state.
    * The new Id will contiune from the current Staff List
    * If localStorage already stored an users, new ID will increase by sum of {currentStaffList} and {storageStaffs}
    */
+  /*
   const [staffId, setStaffId] = useState(
     storageStaffs === null
       ? currentStaffList.length
-      : currentStaffList.length + storageStaffs.length
+      : currentStaffList.length + (storageStaffs.length - 1)
   );
-
+  */
+  const [staffId, setStaffId] = useState(currentStaffList.length);
   /**
    * Touched state, use to monitor the input (when user focus/click on input, this input is touched)
    * Only name, doB, and startDate will be validated so only those field will be monitored
@@ -34,8 +36,8 @@ function AddStaff({ currentStaffList }) {
   const [touched, setTouched] = useState({
     name: false,
     doB: false,
-    startDate: false
-  })
+    startDate: false,
+  });
 
   /**
    * Required state, use to monitor if user already input the infomation or not when submit form
@@ -56,7 +58,7 @@ function AddStaff({ currentStaffList }) {
     doB: "",
     salaryScale: 0,
     startDate: "",
-    department: "",
+    department: "Sale",
     annualLeave: 0,
     overTime: 0,
     image: "/assets/images/employee.svg",
@@ -80,10 +82,10 @@ function AddStaff({ currentStaffList }) {
     const value = target.value;
     const name = target.name;
 
-    setRequired(prevState => ({
+    setRequired((prevState) => ({
       ...prevState,
-      [name]: ''
-    }))
+      [name]: "",
+    }));
 
     setStaff({
       ...staff,
@@ -102,9 +104,9 @@ function AddStaff({ currentStaffList }) {
 
     setTouched({
       ...touched,
-      [name]: true
-    })
-  }
+      [name]: true,
+    });
+  };
 
   /**
    * Submit Handler. When user submit form:
@@ -112,14 +114,13 @@ function AddStaff({ currentStaffList }) {
    * If have any field that not touched yet -> prevent form to submit and end function by use return (2)
    */
   const handleSubmit = (event) => {
-
     // (1)
     for (const property in touched) {
       if (!touched[property]) {
-        setRequired(prevState => ({
+        setRequired((prevState) => ({
           ...prevState,
-          [property]: 'Yêu cầu nhập'
-        }))
+          [property]: "Yêu cầu nhập",
+        }));
       }
     }
 
@@ -128,6 +129,8 @@ function AddStaff({ currentStaffList }) {
       event.preventDefault();
       return;
     }
+
+    setStaffId(staffId + 1);
 
     // Add new staffs into new staff list (that saved on localStrage) - include add staff's id
     setStaffs((prevState) => {
@@ -154,11 +157,9 @@ function AddStaff({ currentStaffList }) {
     else if (touched.name && name.length > 15)
       errors.name = "Yêu cầu dưới 15 ký tự";
 
-    if (touched.doB && !doB)
-      errors.doB = "Yêu cầu nhập ngày sinh";
+    if (touched.doB && !doB) errors.doB = "Yêu cầu nhập ngày sinh";
     else if (touched.doB && doB.slice(0, 4) >= date.slice(0, 4))
       errors.doB = "Năm sinh lớn hơn năm hiện tại";
-
 
     if (touched.startDate && !startDate)
       errors.startDate = "Yêu cầu nhập ngày vào công ty";
@@ -166,16 +167,23 @@ function AddStaff({ currentStaffList }) {
       errors.startDate = "Ngày vào không được lớn hơn ngày hiện tại";
 
     return errors;
-  }
+  };
 
   // Call validate function
   const errors = validate(staff.name, staff.doB, staff.startDate);
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Add Staff
-      </Button>
+      <Card className="my-1 bg-light" onClick={handleShow}>
+        <Card.Img
+          variant="top"
+          src="/assets/images/addStaff.svg"
+          alt="add staff icon"
+        />
+        <Card.Body className="bg-dark text-white text-center">
+          <Card.Text>Thêm</Card.Text>
+        </Card.Body>
+      </Card>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -241,13 +249,14 @@ function AddStaff({ currentStaffList }) {
               <Form.Select
                 aria-label="Department Select"
                 name="department"
+                defaultValue="Sale"
                 onChange={(event) => handleInputChange(event)}
               >
-                <option value="1">Sale</option>
-                <option value="2">HR</option>
-                <option value="3">Marketing</option>
-                <option value="4">IT</option>
-                <option value="5">Finance</option>
+                <option value="Sale">Sale</option>
+                <option value="HR">HR</option>
+                <option value="Marketing">Marketing</option>
+                <option value="IT">IT</option>
+                <option value="Finance">Finance</option>
               </Form.Select>
             </Form.Group>
             {/* department */}

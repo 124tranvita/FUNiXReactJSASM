@@ -28,21 +28,17 @@ function Test() {
         />
 
         <h1>Test Component</h1>
+        <div className="row">
+          <div className="col-6 col-sm-4 col-xl-2">
+            <AddStaff currentStaffList={STAFFS} />
+          </div>
+        </div>
 
-        <AddStaff currentStaffList={STAFFS} />
         <button onClick={() => window.location.reload()}>Refresh</button>
         <div className="row">
           {staffs.map((staff) => (
             <p key={staff.id}>{JSON.stringify(staff)}</p>
           ))}
-        </div>
-        <div className="row">
-          <div className="col-12 col-sm-6 p-1">
-            <StaffBarChart />
-          </div>
-          <div className="col-12 col-sm-6 p-1">
-            <DeptsBudgetPieChart />
-          </div>
         </div>
       </Container>
     </>
