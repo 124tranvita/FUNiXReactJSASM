@@ -5,9 +5,10 @@ import {
   InputGroup,
   FormControl,
   Button,
+  Dropdown
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaFilter } from "react-icons/fa";
 import HomeBreadcrumb from "./HomeBreadcrumbComponent";
 import AddStaff from "./AddStaffComponent";
 
@@ -15,6 +16,7 @@ function StaffList({ staffs }) {
   const [staffList, setStaffList] = useState(
     staffs.sort((a, b) => b.id - a.id)
   );
+  console.log(staffList);
 
   const searchInput = useRef();
 
@@ -29,6 +31,19 @@ function StaffList({ staffs }) {
     setStaffList(filteredStaffList);
   };
 
+  const handleFilter = (value) => {
+    const copiedStaffList = [...staffList];
+
+    if (value === "idAsc") {
+      copiedStaffList.sort((a, b) => a.id - b.id);
+    }
+    else {
+      copiedStaffList.sort((a, b) => b.id - a.id);
+    }
+
+    setStaffList(copiedStaffList);
+  }
+
   return (
     <div className="mt-3 mb-5">
       <Container>
@@ -40,7 +55,7 @@ function StaffList({ staffs }) {
           {/* Staff Search */}
           <div className="col-12 col-sm-6">
             <div className="row">
-              <div className="col-12 col-xl-6"></div>
+              <div className="col-12 col-xl-4"></div>
               <div className="col-12 col-xl-6">
                 <InputGroup className="mb-3">
                   <FormControl
@@ -58,6 +73,20 @@ function StaffList({ staffs }) {
                   </Button>
                 </InputGroup>
               </div>
+              {/* Filter */}
+              <div className="col-12 col-xl-2">
+                <Dropdown onSelect={(eventKey) => handleFilter(eventKey)}>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <FaFilter />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="idAsc">Mã NV tăng dần</Dropdown.Item>
+                    <Dropdown.Item eventKey="idDes">Mã NV giảm dần</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              {/* Filter */}
             </div>
           </div>
           {/* Staff Search */}

@@ -15,20 +15,13 @@ function AddStaff({ currentStaffList }) {
 
   // localStorage staff list state (if localStorage === null => use empty array [])
   const [staffs, setStaffs] = useState(storageStaffs ?? []);
-  console.log(staffs);
+
   /**
    * Set Staff's ID state.
    * The new Id will contiune from the current Staff List
-   * If localStorage already stored an users, new ID will increase by sum of {currentStaffList} and {storageStaffs}
    */
-  /*
-  const [staffId, setStaffId] = useState(
-    storageStaffs === null
-      ? currentStaffList.length
-      : currentStaffList.length + (storageStaffs.length - 1)
-  );
-  */
   const [staffId, setStaffId] = useState(currentStaffList.length);
+
   /**
    * Touched state, use to monitor the input (when user focus/click on input, this input is touched)
    * Only name, doB, and startDate will be validated so only those field will be monitored
@@ -159,7 +152,7 @@ function AddStaff({ currentStaffList }) {
 
     if (touched.doB && !doB) errors.doB = "Yêu cầu nhập ngày sinh";
     else if (touched.doB && doB.slice(0, 4) >= date.slice(0, 4))
-      errors.doB = "Năm sinh lớn hơn năm hiện tại";
+      errors.doB = "Năm sinh không lớn hơn hoặc bằng năm hiện tại";
 
     if (touched.startDate && !startDate)
       errors.startDate = "Yêu cầu nhập ngày vào công ty";
@@ -174,7 +167,7 @@ function AddStaff({ currentStaffList }) {
 
   return (
     <>
-      <Card className="my-1 bg-light" onClick={handleShow}>
+      <Card className="my-1 bg-light add-card" onClick={handleShow}>
         <Card.Img
           variant="top"
           src="/assets/images/addStaff.svg"

@@ -48,3 +48,7 @@
   bottom: 0;
   right: 0;
 } */
+
+.add-card:hover {
+  cursor: pointer;
+}
