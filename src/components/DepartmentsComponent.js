@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card, Button, Container, InputGroup, FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
 
-function Departments({ departments }) {
+function Departments() {
+  // Get the list of departments from {Redux Store}
+  const departments = useSelector(state => state.departments);
 
   const [departmentList, setDepartmentList] = useState(departments);
 

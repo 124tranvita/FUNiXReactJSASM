@@ -8,15 +8,18 @@ import {
   Dropdown
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { FaSearch, FaFilter } from "react-icons/fa";
 import HomeBreadcrumb from "./HomeBreadcrumbComponent";
 import AddStaff from "./AddStaffComponent";
 
-function StaffList({ staffs }) {
+function StaffList() {
+  // Get the staffs list from {Redux Store}
+  const staffs = useSelector(state => state.staffs)
+
   const [staffList, setStaffList] = useState(
-    staffs.sort((a, b) => b.id - a.id)
+    staffs
   );
-  console.log(staffList);
 
   const searchInput = useRef();
 

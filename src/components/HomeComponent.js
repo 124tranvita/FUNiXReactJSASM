@@ -1,14 +1,17 @@
 import { Container, Card } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { FaRegBuilding, FaMoneyCheckAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { BsPeopleFill } from 'react-icons/bs';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
 import { StaffBarChart, DeptsBudgetPieChart } from './ChartComponent';
 
-function Home({ props }) {
+function Home() {
 
-  // Use array destructuring to unpack value from props
-  const [staffs, departments] = props;
+  // Get the list of staffs from {Redux Store}
+  const staffs = useSelector(state => state.staffs);
+  // Get the list of departments from {Redux Store}
+  const departments = useSelector(state => state.departments);
 
   return (
     <div className="mt-3 mb-5">

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Container, Card, Table, InputGroup, FormControl, Dropdown } from 'react-bootstrap';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 import HomeBreadcrumb from './HomeBreadcrumbComponent';
@@ -10,7 +11,9 @@ import { OverTime } from '../shared/data';
 * => 1 giờ làm thêm = 25000
 */
 
-function Salaries({ staffs }) {
+function Salaries() {
+  // Get the list of staffs from {Redux Store}
+  const staffs = useSelector(state => state.staffs);
 
   const [staffList, setStaffList] = useState(staffs);
 

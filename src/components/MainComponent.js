@@ -21,17 +21,14 @@ function Main() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<Home props={[STAFFSFULL, DEPARTMENTS]} />} />
-        <Route path="staffs" element={<StaffList staffs={STAFFSFULL} />} />
+        <Route path="/" element={<Home />} />
+        <Route path="staffs" element={<StaffList />} />
         <Route path="staffs/:staffId" element={<StaffDetail />} />
-        <Route
-          path="departments"
-          element={<Departments departments={DEPARTMENTS} />}
-        />
+        <Route path="departments" element={<Departments />} />
         <Route path="departments/:deptId" element={<DepartmentStaff />} />
-        <Route path="salaries" element={<Salaries staffs={STAFFSFULL} />} />
+        <Route path="salaries" element={<Salaries />} />
         {/* Test Component */}
-        <Route path="test" element={<Test staffs={STAFFSFULL} />} />
+        <Route path="test" element={<Test />} />
         {/* "No match" route case */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
