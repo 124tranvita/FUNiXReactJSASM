@@ -9,13 +9,8 @@ import DepartmentStaff from "./DepartmentStaffsComponent";
 import Salaries from "./SalariesComponent";
 import Test from "./TestComponent";
 import { PageNotFound } from "./PageErrorComponent";
-import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 
 function Main() {
-  // Get the staff list from localStorage
-  const localStaffs = JSON.parse(localStorage.getItem("staffs"));
-  // Push the staff list in localStorage to current staff list
-  const STAFFSFULL = localStaffs === null ? STAFFS : STAFFS.concat(localStaffs);
 
   return (
     <div>

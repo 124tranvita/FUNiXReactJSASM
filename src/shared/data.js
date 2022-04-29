@@ -1,4 +1,4 @@
-import { STAFFS, DEPARTMENTS } from "./staffs";
+import { STAFFS } from "./staffs";
 
 // Get the staff list from localStorage
 const localStaffs = JSON.parse(localStorage.getItem("staffs"));

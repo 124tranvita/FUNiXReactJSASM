@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { Modal, Button, Form, Card } from "react-bootstrap";
+import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Modal, Button, Card } from "react-bootstrap";
+import { FaPlus } from "react-icons/fa"
 import dateFormat from "dateformat";
 
 let date = new Date();
 date = dateFormat(date, "yyyy-mm-dd");
+
+const isRequired = (val) => val && val.length;
+const minLength = (len) => (val) => val && val.length >= len;
+const maxLength = (len) => (val) => !val || val.length <= len;
+const isDoB = (val) => !val || val.slice(0, 4) < date.slice(0, 4);
+const isStartDate = (val) => !val || val <= date;
 
 function AddStaff({ currentStaffList }) {
   // Get the staff list from the localStorage
@@ -23,26 +31,6 @@ function AddStaff({ currentStaffList }) {
   const [staffId, setStaffId] = useState(currentStaffList.length);
 
   /**
-   * Touched state, use to monitor the input (when user focus/click on input, this input is touched)
-   * Only name, doB, and startDate will be validated so only those field will be monitored
-   */
-  const [touched, setTouched] = useState({
-    name: false,
-    doB: false,
-    startDate: false,
-  });
-
-  /**
-   * Required state, use to monitor if user already input the infomation or not when submit form
-   * If user submit form without entered valid data, error message will be displayed
-   */
-  const [required, setRequired] = useState({
-    name: "",
-    doB: "",
-    startDate: "",
-  });
-
-  /**
    * Add new staff state
    */
   const [staff, setStaff] = useState({
@@ -54,8 +42,9 @@ function AddStaff({ currentStaffList }) {
     department: "Sale",
     annualLeave: 0,
     overTime: 0,
-    image: "/assets/images/employee.svg",
+    image: "",
   });
+  console.log(staff);
   /** -----STATE AREA----- */
 
   /** -----HANDLER AREA----- */
@@ -65,66 +54,21 @@ function AddStaff({ currentStaffList }) {
     setShow(false);
   };
 
-  /**
-   * Input Handler
-   * Change the required state: When user is input, required will be set to '' (it mean user is already input and required doesn't make sense anymore)
-   * Set new state for Staff: Add new state for the staff (add new starff)
-   */
-  const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    setRequired((prevState) => ({
-      ...prevState,
-      [name]: "",
-    }));
-
+  const handleChange = (values) => {
+    console.log(values);
     setStaff({
-      ...staff,
-      [name]: value,
+      ...values,
     });
-  };
-
-  /**
-   * Blur Handler
-   * Change the touched state: When user focus and blur from the input, it mean user already touched into field
-   * Set touched to {True} for touched field
-   */
-  const handleBlur = (event) => {
-    const target = event.target;
-    const name = target.name;
-
-    setTouched({
-      ...touched,
-      [name]: true,
-    });
-  };
-
+  }
   /**
    * Submit Handler. When user submit form:
    * Check touched status and show "Yeu cau nhap" for the field that not touched yet. (1)
    * If have any field that not touched yet -> prevent form to submit and end function by use return (2)
    */
-  const handleSubmit = (event) => {
-    // (1)
-    for (const property in touched) {
-      if (!touched[property]) {
-        setRequired((prevState) => ({
-          ...prevState,
-          [property]: "Yêu cầu nhập",
-        }));
-      }
-    }
+  const handleSubmit = () => {
 
-    // (2)
-    if (!touched.name || !touched.doB || !touched.startDate) {
-      event.preventDefault();
-      return;
-    }
-
+    //alert("Current State is: " + JSON.stringify(values));
     setStaffId(staffId + 1);
-
     // Add new staffs into new staff list (that saved on localStrage) - include add staff's id
     setStaffs((prevState) => {
       const newStaffs = [...prevState, { ...staff, id: staffId }];
@@ -134,36 +78,10 @@ function AddStaff({ currentStaffList }) {
 
       return newStaffs;
     });
+
+    window.location.reload()
   };
   /** -----HANDLER AREA----- */
-
-  // Validate input function
-  const validate = (name, doB, startDate) => {
-    const errors = {
-      name: "",
-      doB: "",
-      startDate: "",
-    };
-
-    if (touched.name && name.length < 3)
-      errors.name = "Yêu cầu nhiều hơn 2 ký tự";
-    else if (touched.name && name.length > 15)
-      errors.name = "Yêu cầu dưới 15 ký tự";
-
-    if (touched.doB && !doB) errors.doB = "Yêu cầu nhập ngày sinh";
-    else if (touched.doB && doB.slice(0, 4) >= date.slice(0, 4))
-      errors.doB = "Năm sinh không lớn hơn hoặc bằng năm hiện tại";
-
-    if (touched.startDate && !startDate)
-      errors.startDate = "Yêu cầu nhập ngày vào công ty";
-    else if (touched.startDate && startDate > date)
-      errors.startDate = "Ngày vào không được lớn hơn ngày hiện tại";
-
-    return errors;
-  };
-
-  // Call validate function
-  const errors = validate(staff.name, staff.doB, staff.startDate);
 
   return (
     <>
@@ -174,7 +92,7 @@ function AddStaff({ currentStaffList }) {
           alt="add staff icon"
         />
         <Card.Body className="bg-dark text-white text-center">
-          <Card.Text>Thêm</Card.Text>
+          <Card.Text><FaPlus /></Card.Text>
         </Card.Body>
       </Card>
 
@@ -183,116 +101,171 @@ function AddStaff({ currentStaffList }) {
           <Modal.Title>Thêm nhân viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={(event) => handleSubmit(event)}>
+          <LocalForm
+            onSubmit={handleSubmit}
+            onChange={(values) => handleChange(values)}
+          >
             {/* name */}
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Tên</Form.Label>
-              <Form.Control
-                type="text"
+            <div className="form-group">
+              <label htmlFor="name" className="form-label">Tên</label>
+              <Control.text
+                className="form-control"
+                model=".name"
+                id="name"
                 name="name"
                 placeholder="Họ và Tên"
-                isValid={touched.name && errors.name === ""}
-                isInvalid={errors.name !== "" || required.name !== ""}
-                onChange={(event) => handleInputChange(event)}
-                onBlur={(event) => handleBlur(event)}
+                validators={{
+                  isRequired,
+                  minLength: minLength(2),
+                  maxLength: maxLength(15)
+                }}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.name || required.name}
-              </Form.Control.Feedback>
-            </Form.Group>
+              <Errors
+                className="text-danger"
+                model=".name"
+                show="touched"
+                messages={{
+                  isRequired: "Yêu cầu nhập. ",
+                  minLength: "Tên phải nhiều hơn 2 ký tự.",
+                  maxLength: "Tên không vượt quá 15 ký tự.",
+                }}
+              />
+            </div>
             {/* name */}
 
             {/* doB */}
-            <Form.Group className="mb-3" controlId="doB">
-              <Form.Label>Ngày sinh</Form.Label>
-              <Form.Control
+            <div className="form-group">
+              <label htmlFor="doB" className="form-label">Ngày sinh</label>
+              <Control
                 type="date"
+                className="form-control"
+                model=".doB"
+                id="doB"
                 name="doB"
-                isValid={touched.doB && errors.doB === ""}
-                isInvalid={errors.doB !== "" || required.doB}
-                onChange={(event) => handleInputChange(event)}
-                onBlur={(event) => handleBlur(event)}
+                validators={{
+                  isRequired,
+                  isDoB
+                }}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.doB || required.doB}
-              </Form.Control.Feedback>
-            </Form.Group>
+              <Errors
+                className="text-danger"
+                model=".doB"
+                show="touched"
+                messages={{
+                  isRequired: "Yêu cầu nhập. ",
+                  isDoB: "Năm sinh không lớn hơn hoặc bằng năm hiện tại.",
+                }}
+              />
+            </div>
             {/* doB */}
 
             {/* startDate */}
-            <Form.Group className="mb-3" controlId="startDate">
-              <Form.Label>Ngày vào công ty</Form.Label>
-              <Form.Control
+            <div className="form-group">
+              <label htmlFor="startDate" className="form-label">Ngày vào công ty</label>
+              <Control
                 type="date"
+                className="form-control"
+                model=".startDate"
+                id="startDate"
                 name="startDate"
-                isValid={touched.startDate && errors.startDate === ""}
-                isInvalid={errors.startDate !== "" || required.startDate !== ""}
-                onChange={(event) => handleInputChange(event)}
-                onBlur={(event) => handleBlur(event)}
+                validators={{
+                  isRequired,
+                  isStartDate
+                }}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.startDate || required.startDate}
-              </Form.Control.Feedback>
-            </Form.Group>
+              <Errors
+                className="text-danger"
+                model=".startDate"
+                show="touched"
+                messages={{
+                  isRequired: "Yêu cầu nhập. ",
+                  isStartDate: "Ngày vào không lớn hơn ngày hiện tại.",
+                }}
+              />
+            </div>
             {/* startDate */}
 
+            {/* gender */}
+            <div className="form-group">
+              <label htmlFor="image" className="form-label">Phòng ban</label>
+              <Control.select
+                aria-label="Gender Select"
+                className="form-control"
+                model=".image"
+                id="image"
+                name="image"
+                defaultValue="/assets/images/man.svg"
+              >
+                <option value="/assets/images/man.svg">Nam</option>
+                <option value="/assets/images/woman.svg">Nữ</option>
+              </Control.select>
+            </div>
+            {/* gender */}
+
             {/* department */}
-            <Form.Group className="mb-3" controlId="department">
-              <Form.Label>Phòng ban</Form.Label>
-              <Form.Select
+            <div className="form-group">
+              <label htmlFor="department" className="form-label">Phòng ban</label>
+              <Control.select
                 aria-label="Department Select"
+                className="form-control"
+                model=".department"
+                id="department"
                 name="department"
                 defaultValue="Sale"
-                onChange={(event) => handleInputChange(event)}
               >
                 <option value="Sale">Sale</option>
                 <option value="HR">HR</option>
                 <option value="Marketing">Marketing</option>
                 <option value="IT">IT</option>
                 <option value="Finance">Finance</option>
-              </Form.Select>
-            </Form.Group>
+              </Control.select>
+            </div>
             {/* department */}
 
             {/* salaryScale */}
-            <Form.Group className="mb-3" controlId="salaryScale">
-              <Form.Label>Hệ số lương</Form.Label>
-              <Form.Control
-                type="text"
+            <div className="form-group">
+              <label htmlFor="salaryScale" className="form-label">Hệ số lương</label>
+              <Control.text
+                className="form-control"
+                model=".salaryScale"
+                id="salaryScale"
                 name="salaryScale"
-                value={staff.salaryScale}
-                onChange={(event) => handleInputChange(event)}
+                defaultValue={staff.salaryScale}
               />
-            </Form.Group>
+            </div>
             {/* salaryScale */}
 
             {/* annualLeave */}
-            <Form.Group className="mb-3" controlId="annualLeave">
-              <Form.Label>Số ngày nghỉ còn lại</Form.Label>
-              <Form.Control
-                type="text"
+            <div className="form-group">
+              <label htmlFor="annualLeave" className="form-label">Số ngày nghỉ còn lại</label>
+              <Control.text
+                className="form-control"
+                model=".annualLeave"
+                id="annualLeave"
                 name="annualLeave"
-                value={staff.annualLeave}
-                onChange={(event) => handleInputChange(event)}
+                defaultValue={staff.annualLeave}
               />
-            </Form.Group>
+            </div>
             {/* annualLeave */}
 
             {/* overTime */}
-            <Form.Group className="mb-3" controlId="overTime">
-              <Form.Label>Số ngày đã làm thêm</Form.Label>
-              <Form.Control
-                type="text"
+            <div className="form-group">
+              <label htmlFor="overTime" className="form-label">Số giờ đã làm thêm</label>
+              <Control.text
+                className="form-control"
+                model=".overTime"
+                id="overTime"
                 name="overTime"
-                value={staff.overTime}
-                onChange={(event) => handleInputChange(event)}
+                defaultValue={staff.overTime}
               />
-            </Form.Group>
+            </div>
             {/* overTime */}
-            <Button variant="primary" type="submit">
-              Thêm
-            </Button>
-          </Form>
+            <div className="form-group mt-3">
+              <Button variant="primary" type="submit">
+                Thêm
+              </Button>
+            </div>
+          </LocalForm>
         </Modal.Body>
       </Modal>
     </>
