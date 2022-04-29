@@ -44,18 +44,15 @@ function AddStaff({ currentStaffList }) {
     overTime: 0,
     image: "",
   });
-  console.log(staff);
+
   /** -----STATE AREA----- */
 
   /** -----HANDLER AREA----- */
   // Show/Close Modal handler
   const handleShow = () => setShow(true);
-  const handleClose = () => {
-    setShow(false);
-  };
+  const handleClose = () => setShow(false);
 
   const handleChange = (values) => {
-    console.log(values);
     setStaff({
       ...values,
     });
@@ -67,7 +64,6 @@ function AddStaff({ currentStaffList }) {
    */
   const handleSubmit = () => {
 
-    //alert("Current State is: " + JSON.stringify(values));
     setStaffId(staffId + 1);
     // Add new staffs into new staff list (that saved on localStrage) - include add staff's id
     setStaffs((prevState) => {
@@ -79,6 +75,7 @@ function AddStaff({ currentStaffList }) {
       return newStaffs;
     });
 
+    // Reload page after submit
     window.location.reload()
   };
   /** -----HANDLER AREA----- */
