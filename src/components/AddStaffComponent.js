@@ -111,6 +111,7 @@ function AddStaff({ currentStaffList }) {
                 id="name"
                 name="name"
                 placeholder="Họ và Tên"
+                defaultValue={staff.name}
                 validators={{
                   isRequired,
                   minLength: minLength(2),
@@ -139,6 +140,7 @@ function AddStaff({ currentStaffList }) {
                 model=".doB"
                 id="doB"
                 name="doB"
+                defaultValue={staff.doB}
                 validators={{
                   isRequired,
                   isDoB
@@ -165,6 +167,7 @@ function AddStaff({ currentStaffList }) {
                 model=".startDate"
                 id="startDate"
                 name="startDate"
+                defaultValue={staff.startDate}
                 validators={{
                   isRequired,
                   isStartDate
@@ -184,7 +187,7 @@ function AddStaff({ currentStaffList }) {
 
             {/* gender */}
             <div className="form-group">
-              <label htmlFor="image" className="form-label">Phòng ban</label>
+              <label htmlFor="image" className="form-label">Giới tính</label>
               <Control.select
                 aria-label="Gender Select"
                 className="form-control"
