@@ -1,0 +1,110 @@
+:root {
+  --background-color: #f1f3fb;
+  --card-background-color: #f8f9ff;
+  --red-orange: #ff4500;
+  --orange: #ff8300;
+  --chili-pepper: #df362d;
+  --mimosa: #ffcd58;
+  --chartreuse: #dad870;
+  --purple: #695e93;
+  --purple-1: #603f8b;
+  --violet: #8155ba;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+label {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.navbar {
+  // border-bottom: 1px solid #000;
+  // font-size: 1.2rem;
+  background-color: var(--purple-1);
+  font-weight: 600;
+}
+
+.navbar a {
+  color: #fff !important;
+}
+
+.nav-link.active,
+.navbar-nav .show > .nav-link {
+  // border-bottom: 1px solid #fff;
+  background-color: var(--violet);
+  border-radius: 10px;
+}
+
+/*Staff Card */
+#staffCard,
+#addStaffCard {
+  padding: 1rem 0.5rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid #fff;
+  background-color: var(--card-background-color);
+}
+
+#staffCard:hover,
+#addStaffCard:hover {
+  border: 1px solid var(--purple);
+}
+
+#addStaffCard:hover {
+  cursor: pointer;
+}
+
+#staffCard img,
+#addStaffCard img {
+  width: 50%;
+  height: auto;
+  margin: auto;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: var(--red-orange);
+}
+
+#addStaffCard img {
+  background-color: var(--violet);
+}
+
+#staffCard .card-body,
+#addStaffCard .card-body {
+  border-radius: 0 0 15px 15px;
+  padding-top: 2rem;
+}
+
+/*Search From Label */
+#searchFormLabel {
+  color: #fff;
+  background-color: var(--purple);
+  border: 0;
+}
+
+input[aria-describedby='search-input'] {
+  border: 0;
+}
+
+/* Filter */
+#dropdownStaffFilter {
+  background-color: var(--purple);
+  border: 0;
+}
+
+/*Breadcrumb*/
+#badgeLink {
+  background-color: var(--purple) !important;
+}
+
+#badgeHome {
+  background-color: var(--purple) !important;
+}
+
+/*Footer*/
+#footer {
+  background-color: var(--purple-1);
+  color: #fff;
+}

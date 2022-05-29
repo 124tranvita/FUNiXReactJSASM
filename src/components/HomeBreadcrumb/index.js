@@ -1,4 +1,4 @@
-import { Breadcrumb } from 'react-bootstrap';
+import { Breadcrumb, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function HomeBreadcrumb({ links, active }) {
@@ -9,25 +9,29 @@ function HomeBreadcrumb({ links, active }) {
   return (
     <>
       {links && active && (
-        <Breadcrumb className=" border-bottom border-dark mb-1">
+        <Breadcrumb className="mb-1">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
-            Trang chủ
+            <Badge id="badgeHome">Trang chủ</Badge>
           </Breadcrumb.Item>
           {links.map((link, index) => (
             <Breadcrumb.Item key={index} linkAs={Link} linkProps={{ to: `${link.to}` }}>
-              {link.name}
+              <Badge id="badgeLink">{link.name}</Badge>
             </Breadcrumb.Item>
           ))}
-          <Breadcrumb.Item active>{active}</Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            <Badge bg="secondary">{active}</Badge>
+          </Breadcrumb.Item>
         </Breadcrumb>
       )}
 
       {!links && active && (
-        <Breadcrumb className=" border-bottom border-dark mb-1">
+        <Breadcrumb className="mb-1">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
-            Trang chủ
+            <Badge id="badgeHome">Trang chủ</Badge>
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>{active}</Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            <Badge bg="secondary">{active}</Badge>
+          </Breadcrumb.Item>
         </Breadcrumb>
       )}
     </>

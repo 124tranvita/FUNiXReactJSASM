@@ -6,7 +6,7 @@ import { IoIosPeople } from 'react-icons/io';
 function Header() {
   return (
     <div className="row">
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar expand="lg">
         <Container>
           <Navbar.Brand href="/home">
             <img

@@ -1,14 +1,17 @@
+import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import style from './StaffCard.module.css';
 
 function StaffCard({ staff }) {
   return (
-    <Card className="my-1 bg-light">
-      <Card.Img variant="top" src={staff.image} />
-      <Card.Body className="bg-dark">
-        <Card.Text>{staff.name}</Card.Text>
-      </Card.Body>
-    </Card>
+    <Link to={`/staffs/${staff.id}`} className="text-decoration-none">
+      <Card className="my-2 bg-light" id="staffCard">
+        <Card.Img variant="top" src={staff.image} />
+        <Card.Body>
+          <h6>{staff.name}</h6>
+          <p className="text-muted">{staff.department.name}</p>
+        </Card.Body>
+      </Card>
+    </Link>
   );
 }
 

@@ -1,12 +1,29 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Main from './components/MainComponent';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { privateRoutes } from './routes';
+import Layout from './components/Layout';
 
 function App() {
   return (
-    <div className="row bg-light">
-      <Main />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {privateRoutes.map((route, index) => {
+          const Page = route.component;
+
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Layout>
+                  <Page />
+                </Layout>
+              }
+            />
+          );
+        })}
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,16 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = '';
+const initialState = {
+  staffSearch: '',
+  departmentSearch: '',
+  salarySearch: '',
+};
 
 const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setKeyword: (state, action) => {
-      state = action.payload;
+    staffKeyword: (state, action) => {
+      state.staffSearch = action.payload;
+    },
+    departmentKeyword: (state, action) => {
+      state.departmentSearch = action.payload;
+    },
+    salaryKeyword: (state, action) => {
+      state.salarySearch = action.payload;
     },
   },
 });
 
-export const { setKeyword } = searchSlice.actions;
+export const { staffKeyword, departmentKeyword, salaryKeyword } = searchSlice.actions;
 export default searchSlice.reducer;
