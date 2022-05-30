@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import Search from '../../components/Search';
 import StaffCard from '../../components/Card/components/StaffCard';
-import { StaffFilter } from '../../components/Filter';
+import { StaffIdSort } from '../../components/Sort';
 import { staffKeyword } from '../../features/Search/searchSlice';
 import AddStaff from '../../components/Form/components/AddStaff';
 
@@ -11,8 +11,8 @@ function Staff() {
   const staffs = useSelector((state) => state.staffs);
   const searchKeyword = useSelector((state) => state.search.staffSearch);
   const { idAsc, idDes } = useSelector((state) => ({
-    idAsc: state.filter.idAsc,
-    idDes: state.filter.idDes,
+    idAsc: state.sort.staffIdAsc,
+    idDes: state.sort.staffIdDes,
   }));
 
   const [staffList, setStaffList] = useState(staffs);
@@ -65,7 +65,7 @@ function Staff() {
               <Search action={staffKeyword} />
             </div>
             <div className="col-12 col-xl-2">
-              <StaffFilter />
+              <StaffIdSort />
             </div>
           </div>
         </div>

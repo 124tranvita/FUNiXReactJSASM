@@ -12,8 +12,8 @@ function Search({ action }) {
   return (
     <InputGroup className="mb-3">
       <FormControl
-        placeholder="Tên nhân viên..."
-        aria-label="Tên nhân viên..."
+        placeholder="Tìm kiếm..."
+        aria-label="Tìm kiếm..."
         aria-describedby="search-input"
         onChange={handleChange}
       />

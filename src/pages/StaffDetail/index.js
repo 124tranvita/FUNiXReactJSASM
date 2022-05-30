@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Card, Button } from 'react-bootstrap';
+import dateFormat from 'dateformat';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
-import StaffDetailCard from '../../components/Card/components/StaffDetailCard';
 
 function StaffDetail() {
   // Declare useParams() variable to take the params from URL
@@ -29,8 +30,67 @@ function StaffDetail() {
           />
         </div>
       </div>
-      <div className="row">
-        <StaffDetailCard staff={staff} />
+      <div className="container my-3">
+        <div className="row">
+          <div className="col-12 col-sm-3 mb-3">
+            <Card id="staffDetailCard">
+              <Card.Img variant="top" src={staff.image} />
+              <Card.Body>
+                <Card.Title>{staff.name}</Card.Title>
+                <Card.Text className="text-muted">
+                  {staff.department.name || staff.department}
+                </Card.Text>
+                <Button className="btn-edit">Chỉnh sửa</Button>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="col-12 col-sm-9 mb-3">
+            <Card id="staffInfoCard">
+              <Card.Body>
+                <div className="row">
+                  <div className="col-sm-6 col-xl-4">
+                    <strong>Họ và tên</strong>
+                  </div>
+                  <div className="col-sm-6 col-xl-8">{staff.name}</div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-6 col-xl-4">
+                    <strong>Ngày sinh</strong>
+                  </div>
+                  <div className="col-sm-6 col-xl-8">{dateFormat(staff.doB, 'dd/mm/yyyy')}</div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-6 col-xl-4">
+                    <strong>Ngày vào công ty</strong>
+                  </div>
+                  <div className="col-sm-6 col-xl-8">
+                    {dateFormat(staff.startDate, 'dd/mm/yyyy')}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-6 col-xl-4">
+                    <strong>Phòng ban</strong>
+                  </div>
+                  <div className="col-sm-6 col-xl-8">
+                    {staff.department.name || staff.department}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-6 col-xl-4">
+                    <strong>Số ngày nghỉ còn lại</strong>
+                  </div>
+                  <div className="col-sm-6 col-xl-8">{staff.annualLeave} ngày</div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-6 col-xl-4">
+                    <strong>Số ngày đã làm thêm</strong>
+                  </div>
+                  <div className="col-sm-6 col-xl-8">{staff.overTime}</div>
+                </div>
+              </Card.Body>
+            </Card>
+          </div>
+        </div>
       </div>
     </>
   );

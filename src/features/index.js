@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from './Search/searchSlice';
-import filterReducer from './Filter/filterSlice';
+import sortReducer from './Sort/sortSlice';
 import staffReducer from './Staffs/staffsSlice';
+import departmentReducer from './Deparments/departmentSlice';
 
 const store = configureStore({
   reducer: {
     search: searchReducer,
-    filter: filterReducer,
+    sort: sortReducer,
     staffs: staffReducer,
+    departments: departmentReducer,
   },
 });
 

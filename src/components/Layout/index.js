@@ -8,7 +8,6 @@ function Layout({ children }) {
       <div className="container">
         <div className="py-3">{children}</div>
       </div>
-      <Footer />
     </div>
   );
 }

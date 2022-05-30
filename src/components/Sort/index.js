@@ -1,22 +1,29 @@
 import { Dropdown } from 'react-bootstrap';
 import { FaFilter } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { setIdAsc, setIdDes, setSalaryAsc, setSalaryDes } from '../../features/Filter/filterSlice';
+import {
+  setStaffIdAsc,
+  setStaffIdDes,
+  setDeptIdAsc,
+  setDeptIdDes,
+  setSalaryAsc,
+  setSalaryDes,
+} from '../../features/Sort/sortSlice';
 
-export const StaffFilter = () => {
+export const StaffIdSort = () => {
   const dispatch = useDispatch();
 
-  const handleFilter = (value) => {
+  const handleSort = (value) => {
     if (value === 'idAsc') {
-      dispatch(setIdAsc());
+      dispatch(setStaffIdAsc());
     } else {
-      dispatch(setIdDes());
+      dispatch(setStaffIdDes());
     }
   };
 
   return (
     <>
-      <Dropdown onSelect={(eventKey) => handleFilter(eventKey)}>
+      <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
         <Dropdown.Toggle variant="success" id="dropdownStaffFilter">
           <FaFilter />
         </Dropdown.Toggle>
@@ -30,10 +37,37 @@ export const StaffFilter = () => {
   );
 };
 
-export const SalaryFilter = () => {
+export const DeptIdSort = () => {
   const dispatch = useDispatch();
 
-  const handleFilter = (value) => {
+  const handleSort = (value) => {
+    if (value === 'idAsc') {
+      dispatch(setDeptIdAsc());
+    } else {
+      dispatch(setDeptIdDes());
+    }
+  };
+
+  return (
+    <>
+      <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
+        <Dropdown.Toggle variant="success" id="dropdownStaffFilter">
+          <FaFilter />
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="idAsc">Số NV tăng dần</Dropdown.Item>
+          <Dropdown.Item eventKey="idDes">Số NV giảm dần</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </>
+  );
+};
+
+export const SalarySort = () => {
+  const dispatch = useDispatch();
+
+  const handleSort = (value) => {
     switch (value) {
       case 'salaryAsc':
         dispatch(setSalaryAsc());
@@ -42,10 +76,10 @@ export const SalaryFilter = () => {
         dispatch(setSalaryDes());
         break;
       case 'idAsc':
-        dispatch(setIdAsc());
+        dispatch(setStaffIdAsc());
         break;
       case 'idDes':
-        dispatch(setIdDes());
+        dispatch(setStaffIdDes());
         break;
       default:
         throw new Error('Sort Error!');
@@ -54,7 +88,7 @@ export const SalaryFilter = () => {
 
   return (
     <>
-      <Dropdown onSelect={(eventKey) => handleFilter(eventKey)}>
+      <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
         <Dropdown.Toggle variant="success" id="dropdownSalaryFilter">
           <FaFilter />
         </Dropdown.Toggle>
