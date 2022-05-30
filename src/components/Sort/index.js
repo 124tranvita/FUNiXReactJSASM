@@ -8,6 +8,8 @@ import {
   setDeptIdDes,
   setSalaryAsc,
   setSalaryDes,
+  setSalaryIdAsc,
+  setSalaryIdDes,
 } from '../../features/Sort/sortSlice';
 
 export const StaffIdSort = () => {
@@ -24,7 +26,7 @@ export const StaffIdSort = () => {
   return (
     <>
       <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
-        <Dropdown.Toggle variant="success" id="dropdownStaffFilter">
+        <Dropdown.Toggle variant="outline-secondary" className="dropdownSort">
           <FaFilter />
         </Dropdown.Toggle>
 
@@ -51,7 +53,7 @@ export const DeptIdSort = () => {
   return (
     <>
       <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
-        <Dropdown.Toggle variant="success" id="dropdownStaffFilter">
+        <Dropdown.Toggle variant="outline-secondary" className="dropdownSort">
           <FaFilter />
         </Dropdown.Toggle>
 
@@ -76,10 +78,10 @@ export const SalarySort = () => {
         dispatch(setSalaryDes());
         break;
       case 'idAsc':
-        dispatch(setStaffIdAsc());
+        dispatch(setSalaryIdAsc());
         break;
       case 'idDes':
-        dispatch(setStaffIdDes());
+        dispatch(setSalaryIdDes());
         break;
       default:
         throw new Error('Sort Error!');
@@ -89,7 +91,7 @@ export const SalarySort = () => {
   return (
     <>
       <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
-        <Dropdown.Toggle variant="success" id="dropdownSalaryFilter">
+        <Dropdown.Toggle variant="outline-secondary" className="dropdownSort">
           <FaFilter />
         </Dropdown.Toggle>
 

@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Card } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
 import { MyTextInput, MySelect } from '../../../../utils/formikInput';
+import { addStaff } from '../../../../features/Staffs/staffsSlice';
 
 function AddStaff() {
+  const dispatch = useDispatch();
+  const staffs = useSelector((state) => state.staffs);
+  const departments = useSelector((state) => state.departments);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -54,7 +60,12 @@ function AddStaff() {
               department: Yup.string().required('Hãy chọn phòng ban'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values, null, 2));
+              values.id = staffs.length;
+              values.department = departments.filter(
+                (dept) => dept.id === values.department,
+              )[0];
+              //alert(JSON.stringify(values, null, 2));
+              dispatch(addStaff(values));
               setSubmitting(false);
               handleClose();
             }}
@@ -75,11 +86,11 @@ function AddStaff() {
               <MyTextInput label="Ngày vào công ty" name="startDate" type="date" />
               <MySelect label="Phòng ban" name="department">
                 <option value="">Phòng ban</option>
-                <option value="Sale">Sale</option>
-                <option value="HR">HR</option>
-                <option value="Marketing">Marketing</option>
-                <option value="IT">IT</option>
-                <option value="Finance">Finance</option>
+                <option value="Dept01">Sale</option>
+                <option value="Dept02">HR</option>
+                <option value="Dept03">Marketing</option>
+                <option value="Dept04">IT</option>
+                <option value="Dept05">Finance</option>
               </MySelect>
               <MyTextInput label="Hệ số lương" name="salaryScale" type="number" />
               <MyTextInput label="Số ngày nghỉ còn lại" name="annualLeave" type="number" />

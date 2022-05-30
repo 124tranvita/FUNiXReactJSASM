@@ -5,7 +5,7 @@ function Layout({ children }) {
   return (
     <div>
       <Header />
-      <div className="container">
+      <div className="container content-wrapper">
         <div className="py-3">{children}</div>
       </div>
     </div>

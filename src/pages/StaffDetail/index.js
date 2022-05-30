@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
+import { getOverTime } from '../../utils/data';
 
 function StaffDetail() {
   // Declare useParams() variable to take the params from URL
@@ -85,7 +86,7 @@ function StaffDetail() {
                   <div className="col-sm-6 col-xl-4">
                     <strong>Số ngày đã làm thêm</strong>
                   </div>
-                  <div className="col-sm-6 col-xl-8">{staff.overTime}</div>
+                  <div className="col-sm-6 col-xl-8">{getOverTime(staff.overTime)}</div>
                 </div>
               </Card.Body>
             </Card>

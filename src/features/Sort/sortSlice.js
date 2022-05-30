@@ -5,8 +5,12 @@ const initialState = {
   staffIdDes: false,
   deptIdAsc: false,
   deptIdDes: false,
-  salaryAsc: false,
-  salaryDes: false,
+  salary: {
+    staffIdAsc: false,
+    staffIdDes: false,
+    salaryAsc: false,
+    salaryDes: false,
+  },
 };
 
 const sortSlice = createSlice({
@@ -30,12 +34,28 @@ const sortSlice = createSlice({
       state.deptIdDes = true;
     },
     setSalaryAsc: (state) => {
-      state.salaryAsc = true;
-      state.salaryDes = false;
+      state.salary.salaryAsc = true;
+      state.salary.salaryDes = false;
+      state.salary.staffIdAsc = false;
+      state.salary.staffIdDes = false;
     },
     setSalaryDes: (state) => {
-      state.salaryAsc = false;
-      state.salaryDes = true;
+      state.salary.salaryAsc = false;
+      state.salary.salaryDes = true;
+      state.salary.staffIdAsc = false;
+      state.salary.staffIdDes = false;
+    },
+    setSalaryIdAsc: (state) => {
+      state.salary.salaryAsc = false;
+      state.salary.salaryDes = false;
+      state.salary.staffIdAsc = true;
+      state.salary.staffIdDes = false;
+    },
+    setSalaryIdDes: (state) => {
+      state.salary.salaryAsc = false;
+      state.salary.salaryDes = false;
+      state.salary.staffIdAsc = false;
+      state.salary.staffIdDes = true;
     },
   },
 });
@@ -47,5 +67,7 @@ export const {
   setDeptIdDes,
   setSalaryAsc,
   setSalaryDes,
+  setSalaryIdAsc,
+  setSalaryIdDes,
 } = sortSlice.actions;
 export default sortSlice.reducer;

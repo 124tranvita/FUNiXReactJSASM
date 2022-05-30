@@ -5,8 +5,7 @@ import Search from '../../components/Search';
 import DepartmentCard from '../../components/Card/components/DepartmentCard';
 import { DeptIdSort } from '../../components/Sort';
 import { departmentKeyword } from '../../features/Search/searchSlice';
-
-import AddStaff from '../../components/Form/components/AddStaff';
+import { AddDept } from '../../components/Form';
 
 function Department() {
   const departments = useSelector((state) => state.departments);
@@ -72,9 +71,9 @@ function Department() {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row scroll-list">
         <div className="col-12 col-sm-6 col-xl-2">
-          <AddStaff />
+          <AddDept />
         </div>
         {deparmentList.map((department) => (
           <div className="col-12 col-sm-6 col-xl-2" key={department.id}>

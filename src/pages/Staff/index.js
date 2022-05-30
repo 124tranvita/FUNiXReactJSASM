@@ -5,7 +5,7 @@ import Search from '../../components/Search';
 import StaffCard from '../../components/Card/components/StaffCard';
 import { StaffIdSort } from '../../components/Sort';
 import { staffKeyword } from '../../features/Search/searchSlice';
-import AddStaff from '../../components/Form/components/AddStaff';
+import { AddStaff } from '../../components/Form';
 
 function Staff() {
   const staffs = useSelector((state) => state.staffs);
@@ -70,7 +70,7 @@ function Staff() {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row scroll-list">
         <div className="col-12 col-sm-6 col-xl-2">
           <AddStaff />
         </div>

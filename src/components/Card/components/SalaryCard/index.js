@@ -1,10 +1,10 @@
-import { Card } from 'react-bootstrap';
-import style from './SalaryCard.module.css';
+import { Card, Table } from 'react-bootstrap';
+import { getOverTime } from '../../../../utils/data';
 
 function SalaryCard({ staff }) {
   return (
-    <Card className="m-2">
-      <Card.Header className="bg-dark text-white">
+    <Card className="m-2" id="salaryCard">
+      <Card.Header>
         <Card.Title>{staff.name}</Card.Title>
       </Card.Header>
       <Card.Body>
@@ -20,7 +20,7 @@ function SalaryCard({ staff }) {
             </tr>
             <tr>
               <td>Số giờ làm thêm:</td>
-              <td>{<OverTime times={staff.overTime} />}</td>
+              <td>{getOverTime(staff.overTime)}</td>
             </tr>
           </tbody>
         </Table>

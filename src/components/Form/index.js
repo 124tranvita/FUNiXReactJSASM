@@ -1,3 +1,4 @@
-import AddStaff from '../AddStaffComponent';
+import AddStaff from './components/AddStaff';
+import AddDept from './components/AddDept';
 
-export { AddStaff };
+export { AddStaff, AddDept };

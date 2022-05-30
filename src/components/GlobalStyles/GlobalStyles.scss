@@ -20,11 +20,19 @@ label {
   font-weight: 600;
 }
 
+.content-wrapper {
+  margin-top: 4rem;
+}
+
 .navbar {
   // border-bottom: 1px solid #000;
   // font-size: 1.2rem;
   background-color: var(--purple-1);
   font-weight: 600;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 .navbar a {
@@ -42,7 +50,8 @@ label {
 #staffCard,
 #addStaffCard,
 #staffDetailCard,
-#departmentCard {
+#departmentCard,
+#salaryCard {
   padding: 1rem 0.5rem;
   border-radius: 15px;
   text-align: center;
@@ -52,11 +61,13 @@ label {
 
 #staffCard:hover,
 #addStaffCard:hover,
-#departmentCard :hover {
+#departmentCard:hover,
+#salaryCard:hover {
   border: 1px solid var(--purple);
 }
 
-#addStaffCard:hover {
+#addStaffCard:hover,
+#salaryCard:hover {
   cursor: pointer;
 }
 
@@ -101,6 +112,18 @@ label {
   padding: 0.5rem 0;
   border-bottom: 1px solid #dee2e6;
 }
+
+#salaryCard {
+  padding: 0;
+  text-align: start;
+}
+
+#salaryCard .card-header {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-color: var(--purple);
+  color: #fff;
+}
 /*Search From Label */
 #searchFormLabel {
   color: #fff;
@@ -113,9 +136,14 @@ input[aria-describedby='search-input'] {
 }
 
 /* Filter */
-#dropdownStaffFilter {
+.dropdownSort {
   background-color: var(--purple);
   border: 0;
+  color: #fff;
+}
+
+.dropdownSort:hover {
+  background-color: var(--purple-1);
 }
 
 /*Breadcrumb*/
@@ -136,4 +164,26 @@ input[aria-describedby='search-input'] {
 .btn-edit {
   background-color: var(--purple-1);
   border: 0;
+}
+
+.scroll-list {
+  overflow-y: auto;
+  height: 80vh;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
 }
