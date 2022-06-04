@@ -166,9 +166,13 @@ input[aria-describedby='search-input'] {
   border: 0;
 }
 
+.btn-profile {
+  width: 6rem;
+}
+
 .scroll-list {
   overflow-y: auto;
-  height: 80vh;
+  // height: 80vh;
 }
 
 ::-webkit-scrollbar {

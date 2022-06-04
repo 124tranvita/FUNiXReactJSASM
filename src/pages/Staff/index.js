@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import Search from '../../components/Search';
 import StaffCard from '../../components/Card/components/StaffCard';
@@ -8,8 +8,14 @@ import { staffKeyword } from '../../features/Search/searchSlice';
 import { AddStaff } from '../../components/Form';
 
 function Staff() {
-  const staffs = useSelector((state) => state.staffs);
+  const { staffs, status, error } = useSelector((state) => ({
+    staffs: state.staffs.get.staffs,
+    status: state.staffs.get.status,
+    error: state.staffs.get.error,
+  }));
+
   const searchKeyword = useSelector((state) => state.search.staffSearch);
+
   const { idAsc, idDes } = useSelector((state) => ({
     idAsc: state.sort.staffIdAsc,
     idDes: state.sort.staffIdDes,

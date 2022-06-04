@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Card } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { CgSpinner, CgCheck } from 'react-icons/cg';
 import { Formik, Form } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
+import dateFormat from 'dateformat';
 import { MyTextInput, MySelect } from '../../../../utils/formikInput';
-import { addStaff, resetModifyStatus } from '../../../../features/Staffs/staffsSlice';
+import { updateStaff, resetModifyStatus } from '../../../../features/Staffs/staffsSlice';
 
-function AddStaff() {
+function UpdateStaff({ staff }) {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => ({
     status: state.staffs.modify.status,
@@ -37,30 +38,26 @@ function AddStaff() {
 
   return (
     <>
-      <Card className="my-2 bg-light" id="addStaffCard" onClick={handleShow}>
-        <Card.Img variant="top" src="/assets/images/addStaff.svg" />
-        <Card.Body>
-          <h6>+</h6>
-          <p className="text-muted">Thêm nhân viên</p>
-        </Card.Body>
-      </Card>
+      <Button className="btn-edit btn-profile" styles={{ width: '2rem' }} onClick={handleShow}>
+        Chỉnh sửa
+      </Button>
 
       <Modal show={show} onHide={status !== 'loading' ? handleClose : null}>
         <Modal.Header closeButton>
-          <Modal.Title>Thêm nhân viên</Modal.Title>
+          <Modal.Title>Thông tin nhân viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/**FORM */}
           <Formik
             initialValues={{
-              name: '',
-              doB: '',
-              salaryScale: 0,
-              startDate: '',
-              deptId: '',
-              annualLeave: 0,
-              overTime: 0,
-              image: '',
+              name: staff.name,
+              doB: staff.doB,
+              salaryScale: staff.salaryScale,
+              startDate: staff.startDate,
+              deptId: staff.department.id,
+              annualLeave: staff.annualLeave,
+              overTime: staff.overTime,
+              image: staff.image,
             }}
             validationSchema={Yup.object({
               name: Yup.string()
@@ -79,8 +76,8 @@ function AddStaff() {
               deptId: Yup.string().required('Hãy chọn phòng ban'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values, null, 2));
-              dispatch(addStaff(values));
+              //alert(JSON.stringify(values, null, 2));
+              dispatch(updateStaff({ staffId: staff.id, data: values }));
               setSubmitting(false);
             }}
           >
@@ -112,7 +109,7 @@ function AddStaff() {
               <div className="col-12 mt-2 mx-auto">
                 {status === 'idle' && (
                   <button className="btn btn-primary" type="submit">
-                    Thêm
+                    Lưu
                   </button>
                 )}
 
@@ -137,4 +134,4 @@ function AddStaff() {
   );
 }
 
-export default AddStaff;
+export default UpdateStaff;

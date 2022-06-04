@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
+import { UpdateStaff } from '../../components/Form';
 import { getOverTime } from '../../utils/data';
 
 function StaffDetail() {
@@ -11,90 +13,111 @@ function StaffDetail() {
   let staffId = parseInt(params.staffId, 10);
 
   // Get Staff list in redux store
-  const staffList = useSelector((state) => state.staffs);
+  const { staffList, status } = useSelector((state) => ({
+    staffList: state.staffs.get.staffs,
+    status: state.staffs.get.status,
+  }));
 
-  // Filter the staff with Id
-  const [staff] = staffList.filter((staff) => staff.id === staffId);
+  if (staffList.length === 0) {
+    return <div>Loading...</div>;
+  }
 
-  return (
-    <>
-      <div className="row">
-        <div className="col-12 col-sm-6">
-          <HomeBreadcrumb
-            links={[
-              {
-                to: '/staffs',
-                name: 'Nhân viên',
-              },
-            ]}
-            active={staff.name}
-          />
-        </div>
-      </div>
-      <div className="container my-3">
+  if (staffList.length !== 0) {
+    const staff = staffList.filter((staff) => staff.id === staffId)[0];
+    // setStaff(() => staffList.filter((staff) => staff.id === staffId)[0]);
+
+    return (
+      <>
         <div className="row">
-          <div className="col-12 col-sm-3 mb-3">
-            <Card id="staffDetailCard">
-              <Card.Img variant="top" src={staff.image} />
-              <Card.Body>
-                <Card.Title>{staff.name}</Card.Title>
-                <Card.Text className="text-muted">
-                  {staff.department.name || staff.department}
-                </Card.Text>
-                <Button className="btn-edit">Chỉnh sửa</Button>
-              </Card.Body>
-            </Card>
-          </div>
-          <div className="col-12 col-sm-9 mb-3">
-            <Card id="staffInfoCard">
-              <Card.Body>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-4">
-                    <strong>Họ và tên</strong>
-                  </div>
-                  <div className="col-sm-6 col-xl-8">{staff.name}</div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-4">
-                    <strong>Ngày sinh</strong>
-                  </div>
-                  <div className="col-sm-6 col-xl-8">{dateFormat(staff.doB, 'dd/mm/yyyy')}</div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-4">
-                    <strong>Ngày vào công ty</strong>
-                  </div>
-                  <div className="col-sm-6 col-xl-8">
-                    {dateFormat(staff.startDate, 'dd/mm/yyyy')}
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-4">
-                    <strong>Phòng ban</strong>
-                  </div>
-                  <div className="col-sm-6 col-xl-8">
-                    {staff.department.name || staff.department}
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-4">
-                    <strong>Số ngày nghỉ còn lại</strong>
-                  </div>
-                  <div className="col-sm-6 col-xl-8">{staff.annualLeave} ngày</div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-4">
-                    <strong>Số ngày đã làm thêm</strong>
-                  </div>
-                  <div className="col-sm-6 col-xl-8">{getOverTime(staff.overTime)}</div>
-                </div>
-              </Card.Body>
-            </Card>
+          <div className="col-12 col-sm-6">
+            <HomeBreadcrumb
+              links={[
+                {
+                  to: '/staffs',
+                  name: 'Nhân viên',
+                },
+              ]}
+              active={staff.name}
+            />
           </div>
         </div>
-      </div>
-    </>
-  );
+
+        <div className="container my-3">
+          <div className="row">
+            <div className="col-12 col-sm-3 mb-3">
+              <Card id="staffDetailCard">
+                <Card.Img variant="top" src={staff.image} />
+                <Card.Body>
+                  <Card.Title>{staff.name}</Card.Title>
+                  <Card.Text className="text-muted">{staff.department.name}</Card.Text>
+                  <div className="row">
+                    <div className="col-6">
+                      <UpdateStaff staff={staff} />
+                    </div>
+                    <div className="col-6">
+                      <Button
+                        className="btn btn-danger btn-profile"
+                        styles={{ width: '15rem' }}
+                      >
+                        Xóa
+                      </Button>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+
+            <div className="col-12 col-sm-9 mb-3">
+              <Card id="staffInfoCard">
+                <Card.Body>
+                  <div className="row">
+                    <div className="col-sm-6 col-xl-4">
+                      <strong>Họ và tên</strong>
+                    </div>
+                    <div className="col-sm-6 col-xl-8">{staff.name}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-xl-4">
+                      <strong>Ngày sinh</strong>
+                    </div>
+                    <div className="col-sm-6 col-xl-8">
+                      {dateFormat(staff.doB, 'dd/mm/yyyy')}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-xl-4">
+                      <strong>Ngày vào công ty</strong>
+                    </div>
+                    <div className="col-sm-6 col-xl-8">
+                      {dateFormat(staff.startDate, 'dd/mm/yyyy')}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-xl-4">
+                      <strong>Phòng ban</strong>
+                    </div>
+                    <div className="col-sm-6 col-xl-8">{staff.department.name}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-xl-4">
+                      <strong>Số ngày nghỉ còn lại</strong>
+                    </div>
+                    <div className="col-sm-6 col-xl-8">{staff.annualLeave} ngày</div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-xl-4">
+                      <strong>Số ngày đã làm thêm</strong>
+                    </div>
+                    <div className="col-sm-6 col-xl-8">{getOverTime(staff.overTime)}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default StaffDetail;
