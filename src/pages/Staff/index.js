@@ -1,17 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import LazyLoad from 'react-lazyload';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import Search from '../../components/Search';
 import StaffCard from '../../components/Card/components/StaffCard';
 import { StaffIdSort } from '../../components/Sort';
 import { staffKeyword } from '../../features/Search/searchSlice';
 import { AddStaff } from '../../components/Form';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
 
 function Staff() {
   const { staffs, status, error } = useSelector((state) => ({
-    staffs: state.staffs.get.staffs,
-    status: state.staffs.get.status,
-    error: state.staffs.get.error,
+    staffs: state.staff.get.staffs,
+    status: state.staff.get.status,
+    error: state.staff.get.error,
   }));
 
   const searchKeyword = useSelector((state) => state.search.staffSearch);
@@ -66,25 +69,39 @@ function Staff() {
         </div>
         <div className="col-12 col-sm-6">
           <div className="row">
-            <div className="col-12 col-xl-4"></div>
-            <div className="col-12 col-xl-6">
+            <div className="col-2 col-xl-4 text-xl-end">
+              <AddStaff />
+            </div>
+            <div className="col-8 col-xl-6">
               <Search action={staffKeyword} />
             </div>
-            <div className="col-12 col-xl-2">
+            <div className="col-2 col-xl-2">
               <StaffIdSort />
             </div>
           </div>
         </div>
       </div>
-      <div className="row scroll-list">
-        <div className="col-12 col-sm-6 col-xl-2">
-          <AddStaff />
+
+      {status === 'loading' && (
+        <div className="position-relative">
+          <Loader />
         </div>
-        {staffList.map((staff) => (
-          <div className="col-12 col-sm-6 col-xl-2" key={staff.id}>
-            <StaffCard staff={staff} />
-          </div>
-        ))}
+      )}
+
+      {error && (
+        <div className="position-relative">
+          <Error error={error} />
+        </div>
+      )}
+
+      <div className="row">
+        {status === 'succeeded' && !error && (
+          <>
+            <LazyLoad>
+              <StaffCard staffList={staffList} />
+            </LazyLoad>
+          </>
+        )}
       </div>
     </>
   );

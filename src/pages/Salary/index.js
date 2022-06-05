@@ -5,9 +5,15 @@ import Search from '../../components/Search';
 import { SalaryCard } from '../../components/Card';
 import { SalarySort } from '../../components/Sort';
 import { salaryKeyword } from '../../features/Search/searchSlice';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
 
 function Salary() {
-  const staffs = useSelector((state) => state.staffs);
+  const { staffs, status, error } = useSelector((state) => ({
+    staffs: state.staff.get.staffs,
+    status: state.staff.get.status,
+    error: state.staff.get.error,
+  }));
   const searchKeyword = useSelector((state) => state.search.salarySearch);
   const [staffList, setStaffList] = useState(staffs);
   const { idAsc, idDes, salaryAsc, salaryDes } = useSelector((state) => ({
@@ -83,12 +89,29 @@ function Salary() {
           </div>
         </div>
       </div>
+
+      {status === 'loading' && (
+        <div className="position-relative">
+          <Loader />
+        </div>
+      )}
+
+      {error && (
+        <div className="position-relative">
+          <Error error={error} />
+        </div>
+      )}
+
       <div className="row scroll-list">
-        {staffList.map((staff) => (
-          <div className="col-12 col-sm-6 col-xl-3" key={staff.id}>
-            <SalaryCard staff={staff} />
-          </div>
-        ))}
+        {status === 'succeeded' && !error && (
+          <>
+            {staffList.map((staff) => (
+              <div className="col-12 col-sm-6 col-xl-3" key={staff.id}>
+                <SalaryCard staff={staff} />
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </>
   );

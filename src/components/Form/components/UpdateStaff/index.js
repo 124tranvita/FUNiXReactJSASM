@@ -7,20 +7,23 @@ import moment from 'moment';
 import * as Yup from 'yup';
 import dateFormat from 'dateformat';
 import { MyTextInput, MySelect } from '../../../../utils/formikInput';
-import { updateStaff, resetModifyStatus } from '../../../../features/Staffs/staffsSlice';
+import { updateStaff } from '../../../../features/Staffs/staffsSlice';
 
 function UpdateStaff({ staff }) {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => ({
-    status: state.staffs.modify.status,
-    error: state.staffs.modify.error,
+    status: state.staff.modify.status,
+    error: state.staff.modify.error,
   }));
 
+  const deptList = useSelector((state) => state.department.get.departments);
+
   const [show, setShow] = useState(false);
+  const [originBtn, setOriginBtn] = useState(true);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    dispatch(resetModifyStatus());
+    setOriginBtn(true);
     setShow(true);
   };
 
@@ -79,6 +82,7 @@ function UpdateStaff({ staff }) {
               //alert(JSON.stringify(values, null, 2));
               dispatch(updateStaff({ staffId: staff.id, data: values }));
               setSubmitting(false);
+              setOriginBtn(false);
             }}
           >
             <Form>
@@ -97,9 +101,11 @@ function UpdateStaff({ staff }) {
               <MyTextInput label="Ngày vào công ty" name="startDate" type="date" />
               <MySelect label="Phòng ban" name="deptId">
                 <option value="">Phòng ban</option>
-                <option value="1">Sale</option>
-                <option value="2">IT</option>
-                <option value="3">Marketing</option>
+                {deptList.map((dept) => (
+                  <option value={dept.id} key={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
               </MySelect>
               <MyTextInput label="Hệ số lương" name="salaryScale" type="number" />
               <MyTextInput label="Số ngày nghỉ còn lại" name="annualLeave" type="number" />
@@ -107,19 +113,19 @@ function UpdateStaff({ staff }) {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                {status === 'idle' && (
+                {originBtn && (
                   <button className="btn btn-primary" type="submit">
-                    Lưu
+                    Lưu thay đổi
                   </button>
                 )}
 
-                {status === 'loading' && (
+                {!originBtn && status === 'loading' && (
                   <button className="btn btn-secondary" disabled>
                     <CgSpinner /> Đang lưu
                   </button>
                 )}
 
-                {status === 'succeeded' && (
+                {!originBtn && status === 'succeeded' && (
                   <button className="btn btn-success" disabled>
                     <CgCheck /> Hoàn thành
                   </button>

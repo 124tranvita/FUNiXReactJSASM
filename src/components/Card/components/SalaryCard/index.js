@@ -25,22 +25,19 @@ function SalaryCard({ staff }) {
           </tbody>
         </Table>
       </Card.Body>
-      <Card.Footer className="text-muted">
-        <Card.Title>Lương: {<Salary staff={staff} />}</Card.Title>
+      <Card.Footer className="text-muted" id="salaryFooterCard">
+        <Card.Title>
+          <h5>Lương:</h5>
+          <h4>{salaryFormat(staff.salary)}</h4>
+        </Card.Title>
       </Card.Footer>
     </Card>
   );
 }
 
-const Salary = ({ staff }) => {
+const salaryFormat = (salary) => {
   let vnd = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
-
-  const calSalary = staff.salaryScale * 3000000 + staff.overTime * 25000;
-  return (
-    <>
-      <h3>{vnd.format(calSalary.toFixed(0))}</h3>
-    </>
-  );
+  return vnd.format(salary);
 };
 
 export default SalaryCard;

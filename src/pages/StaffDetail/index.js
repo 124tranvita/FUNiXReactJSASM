@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import { UpdateStaff } from '../../components/Form';
 import { getOverTime } from '../../utils/data';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
 
 function StaffDetail() {
   // Declare useParams() variable to take the params from URL
@@ -13,18 +15,19 @@ function StaffDetail() {
   let staffId = parseInt(params.staffId, 10);
 
   // Get Staff list in redux store
-  const { staffList, status } = useSelector((state) => ({
-    staffList: state.staffs.get.staffs,
-    status: state.staffs.get.status,
-  }));
+  const staffList = useSelector((state) => state.staff.get.staffs);
 
+  // Return if staffList is empty
   if (staffList.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (staffList.length !== 0) {
     const staff = staffList.filter((staff) => staff.id === staffId)[0];
-    // setStaff(() => staffList.filter((staff) => staff.id === staffId)[0]);
 
     return (
       <>
@@ -96,7 +99,14 @@ function StaffDetail() {
                     <div className="col-sm-6 col-xl-4">
                       <strong>Phòng ban</strong>
                     </div>
-                    <div className="col-sm-6 col-xl-8">{staff.department.name}</div>
+                    <div className="col-sm-6 col-xl-8">
+                      <Link
+                        to={`/departments/${staff.department.id}`}
+                        className="text-decoration-none"
+                      >
+                        <strong>{staff.department.name}</strong>
+                      </Link>
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-sm-6 col-xl-4">

@@ -1,14 +1,21 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import LazyLoad from 'react-lazyload';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import Search from '../../components/Search';
 import DepartmentCard from '../../components/Card/components/DepartmentCard';
 import { DeptIdSort } from '../../components/Sort';
 import { departmentKeyword } from '../../features/Search/searchSlice';
 import { AddDept } from '../../components/Form';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
 
 function Department() {
-  const departments = useSelector((state) => state.departments);
+  const { departments, status, error } = useSelector((state) => ({
+    departments: state.department.get.departments,
+    status: state.department.get.status,
+    error: state.department.get.error,
+  }));
   const searchKeyword = useSelector((state) => state.search.departmentSearch);
   const { idAsc, idDes } = useSelector((state) => ({
     idAsc: state.sort.deptIdAsc,
@@ -58,28 +65,41 @@ function Department() {
         <div className="col-12 col-sm-6">
           <HomeBreadcrumb active={'Phòng ban'} />
         </div>
-        <div className="col-12 col-sm-6">
+        <div className="col-12 col-sm-6 mb3">
           <div className="row">
-            <div className="col-12 col-xl-4"></div>
-            <div className="col-12 col-xl-6">
+            <div className="col-2 col-xl-4 text-lg-end">
+              <AddDept />
+            </div>
+            <div className="col-8 col-xl-6">
               <Search action={departmentKeyword} />
             </div>
-            <div className="col-12 col-xl-2">
+            <div className="col-2 col-xl-2">
               <DeptIdSort />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="row scroll-list">
-        <div className="col-12 col-sm-6 col-xl-2">
-          <AddDept />
+      {status === 'loading' && (
+        <div className="position-relative">
+          <Loader />
         </div>
-        {deparmentList.map((department) => (
-          <div className="col-12 col-sm-6 col-xl-2" key={department.id}>
-            <DepartmentCard department={department} />
-          </div>
-        ))}
+      )}
+
+      {error && (
+        <div className="position-relative">
+          <Error error={error} />
+        </div>
+      )}
+
+      <div className="row">
+        {status === 'succeeded' && !error && (
+          <>
+            <LazyLoad>
+              <DepartmentCard deparmentList={deparmentList} />
+            </LazyLoad>
+          </>
+        )}
       </div>
     </>
   );

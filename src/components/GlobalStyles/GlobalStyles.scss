@@ -51,12 +51,32 @@ label {
 #addStaffCard,
 #staffDetailCard,
 #departmentCard,
+#deptDetailCard,
+#deptStaffListCard,
 #salaryCard {
   padding: 1rem 0.5rem;
   border-radius: 15px;
   text-align: center;
   border: 1px solid #fff;
   background-color: var(--card-background-color);
+}
+
+@media screen and (min-width: 768px) {
+  #staffCard,
+  #addStaffCard,
+  #departmentCard,
+  #salaryCar {
+    height: 18rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #staffCard,
+  #addStaffCard,
+  #departmentCard,
+  #salaryCar {
+    height: 14rem;
+  }
 }
 
 #staffCard:hover,
@@ -74,6 +94,7 @@ label {
 #staffCard img,
 #addStaffCard img,
 #staffDetailCard img,
+#deptDetailCard img,
 #departmentCard img {
   width: 50%;
   height: auto;
@@ -113,6 +134,10 @@ label {
   border-bottom: 1px solid #dee2e6;
 }
 
+#deptStaffListCard {
+  text-align: start;
+}
+
 #salaryCard {
   padding: 0;
   text-align: start;
@@ -123,6 +148,11 @@ label {
   border-top-right-radius: 15px;
   background-color: var(--purple);
   color: #fff;
+}
+
+#salaryFooterCard {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 /*Search From Label */
 #searchFormLabel {
@@ -166,14 +196,27 @@ input[aria-describedby='search-input'] {
   border: 0;
 }
 
+.btn-add {
+  background-color: var(--purple);
+  border: 0;
+  color: #fff;
+}
+
+.btn-add:hover,
+.btn-add:focus {
+  background-color: var(--purple-1);
+}
+
 .btn-profile {
   width: 6rem;
 }
 
 .scroll-list {
   overflow-y: auto;
-  // height: 80vh;
+  height: 80vh;
 }
+
+/*Scroll bar*/
 
 ::-webkit-scrollbar {
   width: 0.5rem;

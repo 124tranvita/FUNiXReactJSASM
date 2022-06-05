@@ -17,3 +17,7 @@ export const getOverTime = (times) => {
     return `${(times / 8).toFixed(0)} ngày ${times % 8} giờ`;
   }
 };
+
+export const capitalize = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

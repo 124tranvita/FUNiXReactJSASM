@@ -1,25 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Card } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { CgSpinner, CgCheck } from 'react-icons/cg';
+import { MdPersonAdd } from 'react-icons/md';
 import { Formik, Form } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
 import { MyTextInput, MySelect } from '../../../../utils/formikInput';
-import { addStaff, resetModifyStatus } from '../../../../features/Staffs/staffsSlice';
+import { addStaff } from '../../../../features/Staffs/staffsSlice';
 
 function AddStaff() {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => ({
-    status: state.staffs.modify.status,
-    error: state.staffs.modify.error,
+    status: state.staff.modify.status,
+    error: state.staff.modify.error,
   }));
 
+  const deptList = useSelector((state) => state.department.get.departments);
+
   const [show, setShow] = useState(false);
+  const [originBtn, setOriginBtn] = useState(true);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    dispatch(resetModifyStatus());
+    setOriginBtn(true);
     setShow(true);
   };
 
@@ -37,13 +41,9 @@ function AddStaff() {
 
   return (
     <>
-      <Card className="my-2 bg-light" id="addStaffCard" onClick={handleShow}>
-        <Card.Img variant="top" src="/assets/images/addStaff.svg" />
-        <Card.Body>
-          <h6>+</h6>
-          <p className="text-muted">Thêm nhân viên</p>
-        </Card.Body>
-      </Card>
+      <Button className="btn btn-add btn-outline-secondary" onClick={handleShow}>
+        <MdPersonAdd />
+      </Button>
 
       <Modal show={show} onHide={status !== 'loading' ? handleClose : null}>
         <Modal.Header closeButton>
@@ -79,9 +79,10 @@ function AddStaff() {
               deptId: Yup.string().required('Hãy chọn phòng ban'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values, null, 2));
+              //alert(JSON.stringify(values, null, 2));
               dispatch(addStaff(values));
               setSubmitting(false);
+              setOriginBtn(false);
             }}
           >
             <Form>
@@ -100,9 +101,11 @@ function AddStaff() {
               <MyTextInput label="Ngày vào công ty" name="startDate" type="date" />
               <MySelect label="Phòng ban" name="deptId">
                 <option value="">Phòng ban</option>
-                <option value="1">Sale</option>
-                <option value="2">IT</option>
-                <option value="3">Marketing</option>
+                {deptList.map((dept) => (
+                  <option value={dept.id} key={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
               </MySelect>
               <MyTextInput label="Hệ số lương" name="salaryScale" type="number" />
               <MyTextInput label="Số ngày nghỉ còn lại" name="annualLeave" type="number" />
@@ -110,19 +113,19 @@ function AddStaff() {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                {status === 'idle' && (
+                {originBtn && (
                   <button className="btn btn-primary" type="submit">
                     Thêm
                   </button>
                 )}
 
-                {status === 'loading' && (
+                {!originBtn && status === 'loading' && (
                   <button className="btn btn-secondary" disabled>
                     <CgSpinner /> Đang lưu
                   </button>
                 )}
 
-                {status === 'succeeded' && (
+                {!originBtn && status === 'succeeded' && (
                   <button className="btn btn-success" disabled>
                     <CgCheck /> Hoàn thành
                   </button>

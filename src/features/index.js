@@ -8,8 +8,8 @@ const store = configureStore({
   reducer: {
     search: searchReducer,
     sort: sortReducer,
-    staffs: staffReducer,
-    departments: departmentReducer,
+    staff: staffReducer,
+    department: departmentReducer,
   },
 });
 

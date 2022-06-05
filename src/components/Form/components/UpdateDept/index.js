@@ -1,15 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { CgSpinner, CgCheck } from 'react-icons/cg';
-import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../../../../utils/formikInput';
-import { addDept } from '../../../../features/Deparments/departmentSlice';
+import { updateDept } from '../../../../features/Deparments/departmentSlice';
 import { capitalize } from '../../../../utils/data';
 
-function AddDept() {
+function UpdateDept({ dept }) {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => ({
     status: state.department.modify.status,
@@ -19,41 +17,24 @@ function AddDept() {
   const deptList = useSelector((state) => state.department.get.departments);
 
   const [show, setShow] = useState(false);
-  const [originBtn, setOriginBtn] = useState(true);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setOriginBtn(true);
-    setShow(true);
-  };
-
-  useEffect(() => {
-    let timeId;
-
-    if (status === 'succeeded') {
-      timeId = setTimeout(() => {
-        setShow(false);
-      }, 500);
-    }
-
-    return () => clearTimeout(timeId);
-  }, [status]);
-
+  const handleShow = () => setShow(true);
   return (
     <>
-      <Button className="btn btn-add btn-outline-secondary" onClick={handleShow}>
-        <AiOutlineAppstoreAdd />
+      <Button className="btn-edit btn-profile" styles={{ width: '2rem' }} onClick={handleShow}>
+        Chỉnh sửa
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Thêm phòng ban</Modal.Title>
+          <Modal.Title>Thông tin phòng ban</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/**FORM */}
           <Formik
             initialValues={{
-              name: '',
+              name: dept.name,
             }}
             validationSchema={Yup.object({
               name: Yup.string()
@@ -66,11 +47,11 @@ function AddDept() {
                 .required('Yêu cầu nhập'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              //alert(JSON.stringify(values, null, 2));
+              alert(JSON.stringify(values, null, 2));
               values.name = capitalize(values.name);
-              dispatch(addDept(values));
+              dispatch(updateDept({ deptId: dept.id, data: values }));
               setSubmitting(false);
-              setOriginBtn(false);
+              handleClose();
             }}
           >
             <Form>
@@ -83,23 +64,9 @@ function AddDept() {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                {originBtn && (
-                  <button className="btn btn-primary" type="submit">
-                    Thêm
-                  </button>
-                )}
-
-                {!originBtn && status === 'loading' && (
-                  <button className="btn btn-secondary" disabled>
-                    <CgSpinner /> Đang lưu
-                  </button>
-                )}
-
-                {!originBtn && status === 'succeeded' && (
-                  <button className="btn btn-success" disabled>
-                    <CgCheck /> Hoàn thành
-                  </button>
-                )}
+                <button className="btn btn-primary" type="submit">
+                  Lưu
+                </button>
               </div>
             </Form>
           </Formik>
@@ -110,4 +77,4 @@ function AddDept() {
   );
 }
 
-export default AddDept;
+export default UpdateDept;

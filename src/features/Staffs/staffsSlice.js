@@ -6,16 +6,19 @@ const initialState = {
   modify: { status: 'idle', error: null },
 };
 
-export const getStaffs = createAsyncThunk('staffs/getStaffs', async () => {
-  try {
-    const response = await manageApi.get('/staffs');
-    return [...response.data];
-  } catch (error) {
-    return error.message;
-  }
-});
+export const getStaffs = createAsyncThunk(
+  'staff/getStaffs',
+  async (args, { rejectWithValue }) => {
+    try {
+      const response = await manageApi.get('/staffs');
+      return [...response.data];
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
-export const addStaff = createAsyncThunk('staffs/addStaff', async (data) => {
+export const addStaff = createAsyncThunk('staff/addStaff', async (data) => {
   try {
     //console.log(data);
     const response = await manageApi.post('/staffs', data);
@@ -26,7 +29,7 @@ export const addStaff = createAsyncThunk('staffs/addStaff', async (data) => {
   }
 });
 
-export const updateStaff = createAsyncThunk('staffs/updateStaff', async ({ staffId, data }) => {
+export const updateStaff = createAsyncThunk('staff/updateStaff', async ({ staffId, data }) => {
   console.log('staff Id: ', staffId);
   console.log('Data: ', data);
   try {
@@ -38,7 +41,7 @@ export const updateStaff = createAsyncThunk('staffs/updateStaff', async ({ staff
   }
 });
 
-export const deleteStaff = createAsyncThunk('staffs/deleteStaff', async (staffId) => {
+export const deleteStaff = createAsyncThunk('staff/deleteStaff', async (staffId) => {
   try {
     const response = await manageApi.delete(`/staffs/${staffId}`);
     return response.data;
@@ -49,13 +52,9 @@ export const deleteStaff = createAsyncThunk('staffs/deleteStaff', async (staffId
 });
 
 const staffsSlice = createSlice({
-  name: 'staffs',
+  name: 'staff',
   initialState,
-  reducers: {
-    resetModifyStatus(state) {
-      state.modify.status = 'idle';
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(getStaffs.pending, (state, pending) => {
@@ -109,5 +108,4 @@ const staffsSlice = createSlice({
   },
 });
 
-export const { resetModifyStatus } = staffsSlice.actions;
 export default staffsSlice.reducer;
