@@ -1,15 +1,16 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import dateFormat from 'dateformat';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
-import { UpdateStaff } from '../../components/Form';
+import { UpdateStaff, Delete } from '../../components/Modal';
 import { getOverTime } from '../../utils/data';
 import Loader from '../../components/Loader';
-import Error from '../../components/Error';
+import { deleteStaff } from '../../features/Staffs/staffsSlice';
 
 function StaffDetail() {
+  let navigate = useNavigate();
   // Declare useParams() variable to take the params from URL
   let params = useParams();
   let staffId = parseInt(params.staffId, 10);
@@ -18,7 +19,7 @@ function StaffDetail() {
   const staffList = useSelector((state) => state.staff.get.staffs);
 
   // Return if staffList is empty
-  if (staffList.length === 0) {
+  if (!staffList[0]) {
     return (
       <div>
         <Loader />
@@ -28,6 +29,11 @@ function StaffDetail() {
 
   if (staffList.length !== 0) {
     const staff = staffList.filter((staff) => staff.id === staffId)[0];
+
+    if (!staff) {
+      navigate('/staffs');
+      return;
+    }
 
     return (
       <>
@@ -58,12 +64,11 @@ function StaffDetail() {
                       <UpdateStaff staff={staff} />
                     </div>
                     <div className="col-6">
-                      <Button
-                        className="btn btn-danger btn-profile"
-                        styles={{ width: '15rem' }}
-                      >
-                        Xóa
-                      </Button>
+                      <Delete
+                        action={() => deleteStaff(staff.id)}
+                        disabled={false}
+                        component={'staff'}
+                      />
                     </div>
                   </div>
                 </Card.Body>

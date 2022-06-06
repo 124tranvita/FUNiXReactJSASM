@@ -30,7 +30,6 @@ export const addDept = createAsyncThunk('department/addDept', async (data) => {
 export const updateDept = createAsyncThunk(
   'department/updateDept',
   async ({ deptId, data }) => {
-    console.log('departmentSlice detpId: ', deptId);
     try {
       const response = await manageApi.patch(`/departments/${deptId}`, data);
       return response.data;

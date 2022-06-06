@@ -6,7 +6,7 @@ import Search from '../../components/Search';
 import DepartmentCard from '../../components/Card/components/DepartmentCard';
 import { DeptIdSort } from '../../components/Sort';
 import { departmentKeyword } from '../../features/Search/searchSlice';
-import { AddDept } from '../../components/Form';
+import { AddDept } from '../../components/Modal';
 import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 

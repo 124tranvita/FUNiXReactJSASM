@@ -1,41 +1,77 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { CgSpinner, CgCheck } from 'react-icons/cg';
 import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../../../../utils/formikInput';
 import { addDept } from '../../../../features/Deparments/departmentSlice';
 import { capitalize } from '../../../../utils/data';
+import { notifyShow } from '../../../../features/Notification/notificationSlice';
 
 function AddDept() {
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => ({
-    status: state.department.modify.status,
-    error: state.department.modify.error,
-  }));
-
+  // Monitor Modal show and close
+  const isClose = useRef(false);
+  // Get deparment's modify status
+  const status = useSelector((state) => state.department.modify.status);
+  // Get deparment list to validate dept's name input
   const deptList = useSelector((state) => state.department.get.departments);
-
+  // Modal useState
   const [show, setShow] = useState(false);
-  const [originBtn, setOriginBtn] = useState(true);
 
+  // Button useState
+  const [button, setButton] = useState({
+    variant: 'primary',
+    label: 'Thêm',
+    disabled: false,
+  });
+
+  // Change Button when modify's status is changed
+  useEffect(() => {
+    if (status === 'loading') {
+      setButton({
+        variant: 'secondary',
+        label: '\u27F3 Đang lưu...',
+        disabled: true,
+      });
+    }
+
+    if (status === 'succeeded') {
+      setButton({
+        variant: 'success',
+        label: '\u2713 Hoàn thành',
+        disabled: true,
+      });
+    }
+  }, [status]);
+
+  // Handle show/close Modal
   const handleClose = () => setShow(false);
+  const handleDispatch = () => {
+    setShow(false);
+    dispatch(notifyShow());
+  };
   const handleShow = () => {
-    setOriginBtn(true);
+    setButton({
+      variant: 'primary',
+      label: 'Thêm',
+      disabled: false,
+    });
     setShow(true);
   };
 
+  // Delay close Modal by 500ms when request succeeded
   useEffect(() => {
     let timeId;
 
-    if (status === 'succeeded') {
+    if (isClose.current && status === 'succeeded') {
       timeId = setTimeout(() => {
-        setShow(false);
+        handleDispatch();
+        isClose.current = false;
       }, 500);
     }
-
+    // eslint-disable-next-line
     return () => clearTimeout(timeId);
   }, [status]);
 
@@ -66,11 +102,10 @@ function AddDept() {
                 .required('Yêu cầu nhập'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              //alert(JSON.stringify(values, null, 2));
               values.name = capitalize(values.name);
               dispatch(addDept(values));
+              isClose.current = true;
               setSubmitting(false);
-              setOriginBtn(false);
             }}
           >
             <Form>
@@ -83,23 +118,9 @@ function AddDept() {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                {originBtn && (
-                  <button className="btn btn-primary" type="submit">
-                    Thêm
-                  </button>
-                )}
-
-                {!originBtn && status === 'loading' && (
-                  <button className="btn btn-secondary" disabled>
-                    <CgSpinner /> Đang lưu
-                  </button>
-                )}
-
-                {!originBtn && status === 'succeeded' && (
-                  <button className="btn btn-success" disabled>
-                    <CgCheck /> Hoàn thành
-                  </button>
-                )}
+                <Button variant={button.variant} type="submit" disabled={button.disabled}>
+                  {button.label}
+                </Button>
               </div>
             </Form>
           </Formik>

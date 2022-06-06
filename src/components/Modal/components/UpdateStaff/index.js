@@ -1,66 +1,99 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { CgSpinner, CgCheck } from 'react-icons/cg';
-import { MdPersonAdd } from 'react-icons/md';
 import { Formik, Form } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
 import { MyTextInput, MySelect } from '../../../../utils/formikInput';
-import { addStaff } from '../../../../features/Staffs/staffsSlice';
+import { updateStaff } from '../../../../features/Staffs/staffsSlice';
+import { notifyShow } from '../../../../features/Notification/notificationSlice';
 
-function AddStaff() {
+function UpdateStaff({ staff }) {
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => ({
-    status: state.staff.modify.status,
-    error: state.staff.modify.error,
-  }));
-
+  // Montion Modal show and close
+  const isClose = useRef(false);
+  // Get staff's modify status
+  const status = useSelector((state) => state.staff.modify.status);
+  // Get department list an parse it as dept select option
   const deptList = useSelector((state) => state.department.get.departments);
-
+  // Modal useState
   const [show, setShow] = useState(false);
-  const [originBtn, setOriginBtn] = useState(true);
+  // Button useState
+  const [button, setButton] = useState({
+    variant: 'primary',
+    label: 'Thêm',
+    disabled: false,
+  });
 
+  // Change Button when modify's status has changed
+  useEffect(() => {
+    if (status === 'loading') {
+      setButton({
+        variant: 'secondary',
+        label: '\u27F3 Đang lưu...',
+        disabled: true,
+      });
+    }
+
+    if (status === 'succeeded') {
+      setButton({
+        variant: 'success',
+        label: '\u2713 Hoàn thành',
+        disabled: true,
+      });
+    }
+  }, [status]);
+
+  // Handle show/close Modal
   const handleClose = () => setShow(false);
+  const handleDispatch = () => {
+    setShow(false);
+    dispatch(notifyShow());
+  };
   const handleShow = () => {
-    setOriginBtn(true);
+    setButton({
+      variant: 'primary',
+      label: 'Thêm',
+      disabled: false,
+    });
     setShow(true);
   };
 
+  // Deplay close Modal by 500ms when request succeeded
   useEffect(() => {
     let timeId;
 
-    if (status === 'succeeded') {
+    if (isClose.current && status === 'succeeded') {
       timeId = setTimeout(() => {
-        setShow(false);
+        handleDispatch();
+        isClose.current = false;
       }, 500);
     }
-
     return () => clearTimeout(timeId);
   }, [status]);
 
   return (
     <>
-      <Button className="btn btn-add btn-outline-secondary" onClick={handleShow}>
-        <MdPersonAdd />
+      <Button className="btn-edit btn-profile" style={{ width: '7rem' }} onClick={handleShow}>
+        Chỉnh sửa
       </Button>
 
       <Modal show={show} onHide={status !== 'loading' ? handleClose : null}>
         <Modal.Header closeButton>
-          <Modal.Title>Thêm nhân viên</Modal.Title>
+          <Modal.Title>Thông tin nhân viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/**FORM */}
           <Formik
             initialValues={{
-              name: '',
-              doB: '',
-              salaryScale: 0,
-              startDate: '',
-              deptId: '',
-              annualLeave: 0,
-              overTime: 0,
-              image: '',
+              name: staff.name,
+              doB: staff.doB,
+              salaryScale: staff.salaryScale,
+              startDate: staff.startDate,
+              deptId: staff.department.id,
+              annualLeave: staff.annualLeave,
+              overTime: staff.overTime,
+              image: staff.image,
             }}
             validationSchema={Yup.object({
               name: Yup.string()
@@ -80,9 +113,9 @@ function AddStaff() {
             })}
             onSubmit={(values, { setSubmitting }) => {
               //alert(JSON.stringify(values, null, 2));
-              dispatch(addStaff(values));
+              dispatch(updateStaff({ staffId: staff.id, data: values }));
+              isClose.current = true;
               setSubmitting(false);
-              setOriginBtn(false);
             }}
           >
             <Form>
@@ -113,23 +146,9 @@ function AddStaff() {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                {originBtn && (
-                  <button className="btn btn-primary" type="submit">
-                    Thêm
-                  </button>
-                )}
-
-                {!originBtn && status === 'loading' && (
-                  <button className="btn btn-secondary" disabled>
-                    <CgSpinner /> Đang lưu
-                  </button>
-                )}
-
-                {!originBtn && status === 'succeeded' && (
-                  <button className="btn btn-success" disabled>
-                    <CgCheck /> Hoàn thành
-                  </button>
-                )}
+                <Button variant={button.variant} type="submit" disabled={button.disabled}>
+                  {button.label}
+                </Button>
               </div>
             </Form>
           </Formik>
@@ -140,4 +159,4 @@ function AddStaff() {
   );
 }
 
-export default AddStaff;
+export default UpdateStaff;

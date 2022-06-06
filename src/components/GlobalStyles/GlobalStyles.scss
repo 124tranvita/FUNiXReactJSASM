@@ -194,6 +194,13 @@ input[aria-describedby='search-input'] {
 .btn-edit {
   background-color: var(--purple-1);
   border: 0;
+  color: #fff;
+}
+
+.btn-edit:hover,
+.btn-edit:focus {
+  background-color: var(--purple);
+  border: 0;
 }
 
 .btn-add {
@@ -214,6 +221,15 @@ input[aria-describedby='search-input'] {
 .scroll-list {
   overflow-y: auto;
   height: 80vh;
+}
+
+/*Toast*/
+.toast-container {
+  z-index: 10;
+}
+
+.toast-container .toast-body {
+  color: #fff;
 }
 
 /*Scroll bar*/

@@ -6,7 +6,7 @@ import Search from '../../components/Search';
 import StaffCard from '../../components/Card/components/StaffCard';
 import { StaffIdSort } from '../../components/Sort';
 import { staffKeyword } from '../../features/Search/searchSlice';
-import { AddStaff } from '../../components/Form';
+import { AddStaff } from '../../components/Modal';
 import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 

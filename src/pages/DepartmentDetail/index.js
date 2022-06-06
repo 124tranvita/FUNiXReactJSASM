@@ -1,30 +1,37 @@
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
-import { UpdateDept } from '../../components/Form';
+import { UpdateDept, Delete } from '../../components/Modal';
 import Loader from '../../components/Loader';
 import Error from '../../components/Error';
+import { deleteDept } from '../../features/Deparments/departmentSlice';
 
 function DepartmentDetail() {
+  let navigate = useNavigate();
   let params = useParams();
   let deptId = parseInt(params.deptId, 10);
 
   const deptList = useSelector((state) => state.department.get.departments);
   const staffList = useSelector((state) => state.staff.get.staffs);
 
-  if (deptList.length === 0) {
+  if (!deptList[0]) {
     return (
-      <div>
+      <>
         <Loader />
-      </div>
+      </>
     );
   }
 
   if (deptList.length !== 0) {
     const dept = deptList.filter((dept) => dept.id === deptId)[0];
     const deptStaff = staffList.filter((staff) => staff.department.id === deptId);
+
+    if (!dept) {
+      navigate('/departments');
+      return;
+    }
 
     return (
       <>
@@ -54,9 +61,19 @@ function DepartmentDetail() {
                     <UpdateDept dept={dept} />
                   </div>
                   <div className="col-12 col-lg-6 mb-3">
-                    <button className="btn btn-danger btn-profile" styles={{ width: '15rem' }}>
-                      Xóa
-                    </button>
+                    {deptStaff[0] ? (
+                      <Delete
+                        action={() => deleteDept(dept.id)}
+                        disabled={true}
+                        component={'department'}
+                      />
+                    ) : (
+                      <Delete
+                        action={() => deleteDept(dept.id)}
+                        disabled={false}
+                        component={'department'}
+                      />
+                    )}
                   </div>
                 </div>
               </Card.Body>
@@ -65,23 +82,30 @@ function DepartmentDetail() {
           <div className="col-12 col-sm-9">
             <Card id="deptStaffListCard">
               <Card.Body className="scroll-list">
-                {deptStaff.map((staff) => (
-                  <div className="row mb-3 pb-2 mx-2 border-bottom" key={staff.id}>
-                    <div className="col-2">
-                      <Card.Img src={staff.image} width="64" height="64" />
-                    </div>
-                    <div className="col-10">
-                      <Link to={`/staffs/${staff.id}`} className="text-decoration-none">
-                        <Card.Title>{staff.name}</Card.Title>
-                      </Link>
-                      <span className="text-muted">Ngày vào làm: {staff.startDate}</span>
-                      <span className="text-muted mx-2">|</span>
-                      <span className="text-muted">Hệ số lương: {staff.salaryScale} </span>
-                      <span className="text-muted mx-2">|</span>
-                      <span className="text-muted">Số giờ đã làm thêm {staff.overTime}</span>
-                    </div>
-                  </div>
-                ))}
+                {!deptStaff[0] && <Error error={'Không có nhân viên'} />}
+                {deptStaff[0] && (
+                  <>
+                    {deptStaff.map((staff) => (
+                      <div className="row mb-3 pb-2 mx-2 border-bottom" key={staff.id}>
+                        <div className="col-2">
+                          <Card.Img src={staff.image} width="64" height="64" />
+                        </div>
+                        <div className="col-10">
+                          <Link to={`/staffs/${staff.id}`} className="text-decoration-none">
+                            <Card.Title>{staff.name}</Card.Title>
+                          </Link>
+                          <span className="text-muted">Ngày vào làm: {staff.startDate}</span>
+                          <span className="text-muted mx-2">|</span>
+                          <span className="text-muted">Hệ số lương: {staff.salaryScale} </span>
+                          <span className="text-muted mx-2">|</span>
+                          <span className="text-muted">
+                            Số giờ đã làm thêm {staff.overTime}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
               </Card.Body>
             </Card>
           </div>

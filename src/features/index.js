@@ -3,6 +3,7 @@ import searchReducer from './Search/searchSlice';
 import sortReducer from './Sort/sortSlice';
 import staffReducer from './Staffs/staffsSlice';
 import departmentReducer from './Deparments/departmentSlice';
+import notificationReducer from './Notification/notificationSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     sort: sortReducer,
     staff: staffReducer,
     department: departmentReducer,
+    notification: notificationReducer,
   },
 });
 

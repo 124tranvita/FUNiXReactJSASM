@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
@@ -6,23 +6,80 @@ import * as Yup from 'yup';
 import { MyTextInput } from '../../../../utils/formikInput';
 import { updateDept } from '../../../../features/Deparments/departmentSlice';
 import { capitalize } from '../../../../utils/data';
+import { notifyShow } from '../../../../features/Notification/notificationSlice';
 
 function UpdateDept({ dept }) {
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => ({
-    status: state.department.modify.status,
-    error: state.department.modify.error,
-  }));
-
+  // Monitor Modal show and close
+  const isClose = useRef(false);
+  // Get deparment's modify status
+  const status = useSelector((state) => state.department.modify.status);
+  // Get department list to validate dept's name input
   const deptList = useSelector((state) => state.department.get.departments);
-
+  // Modal useState
   const [show, setShow] = useState(false);
+  // Button useState
+  const [button, setButton] = useState({
+    variant: 'primary',
+    label: 'Thêm',
+    disabled: false,
+  });
 
+  // Change Button when modify's status has changed
+  useEffect(() => {
+    if (status === 'loading') {
+      setButton({
+        variant: 'secondary',
+        label: '\u27F3 Đang lưu...',
+        disabled: true,
+      });
+    }
+
+    if (status === 'succeeded') {
+      setButton({
+        variant: 'success',
+        label: '\u2713 Hoàn thành',
+        disabled: true,
+      });
+    }
+  }, [status]);
+
+  // Handle show/close Modal
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleDispatch = () => {
+    setShow(false);
+    dispatch(notifyShow());
+  };
+  const handleShow = () => {
+    setButton({
+      variant: 'primary',
+      label: 'Thêm',
+      disabled: false,
+    });
+    setShow(true);
+  };
+
+  // Delay close Modal by 500ms when request succeeded
+  useEffect(() => {
+    let timeId;
+
+    if (isClose.current && status === 'succeeded') {
+      timeId = setTimeout(() => {
+        handleDispatch();
+        isClose.current = false;
+      }, 500);
+    }
+    // eslint-disable-next-line
+    return () => clearTimeout(timeId);
+  }, [status]);
+
   return (
     <>
-      <Button className="btn-edit btn-profile" styles={{ width: '2rem' }} onClick={handleShow}>
+      <Button
+        className="btn-edit btn-outline-secondary"
+        style={{ width: '7rem' }}
+        onClick={handleShow}
+      >
         Chỉnh sửa
       </Button>
 
@@ -47,11 +104,11 @@ function UpdateDept({ dept }) {
                 .required('Yêu cầu nhập'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values, null, 2));
+              //alert(JSON.stringify(values, null, 2));
               values.name = capitalize(values.name);
               dispatch(updateDept({ deptId: dept.id, data: values }));
+              isClose.current = true;
               setSubmitting(false);
-              handleClose();
             }}
           >
             <Form>
@@ -64,9 +121,9 @@ function UpdateDept({ dept }) {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                <button className="btn btn-primary" type="submit">
-                  Lưu
-                </button>
+                <Button variant={button.variant} type="submit" disabled={button.disabled}>
+                  {button.label}
+                </Button>
               </div>
             </Form>
           </Formik>
