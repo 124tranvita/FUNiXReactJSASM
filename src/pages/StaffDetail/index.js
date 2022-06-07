@@ -60,10 +60,10 @@ function StaffDetail() {
                   <Card.Title>{staff.name}</Card.Title>
                   <Card.Text className="text-muted">{staff.department.name}</Card.Text>
                   <div className="row">
-                    <div className="col-6">
+                    <div className="col-12 col-xl-6 mb-3">
                       <UpdateStaff staff={staff} />
                     </div>
-                    <div className="col-6">
+                    <div className="col-12 col-xl-6 mb-3">
                       <Delete
                         action={() => deleteStaff(staff.id)}
                         disabled={false}

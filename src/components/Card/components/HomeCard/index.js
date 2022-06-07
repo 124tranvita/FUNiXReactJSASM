@@ -1,22 +1,25 @@
 import { Card } from 'react-bootstrap';
-import styles from './HomeCard.module.css';
+import { BsPeopleFill, BsFillHouseDoorFill, BsWalletFill, BsLink45Deg } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
-function HomeCard({ name, variant, list }) {
+function HomeCard({ name, description, list, path }) {
   return (
-    <Card
-      bg={variant.toLowerCase()}
-      key={variant}
-      text={variant.toLowerCase() === 'light' ? 'dark' : 'white'}
-      className="card-home mb-2"
-    >
-      <Card.Header>{name}</Card.Header>
+    <Card className="home-card mb-2">
+      <Card.Header>
+        {name === 'Nhân viên' && <>{<BsPeopleFill />}</>}
+        {name === 'Phòng ban' && <>{<BsFillHouseDoorFill />}</>}
+        {name === 'Tổng chi' && <>{<BsWalletFill />}</>}
+      </Card.Header>
       <Card.Body>
-        <Card.Title>Tổng {name} </Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of the card's
-          content.
-        </Card.Text>
+        <Card.Title>
+          {list.length} {name}{' '}
+        </Card.Title>
+        <Card.Text>{description}</Card.Text>
       </Card.Body>
+      <Card.Footer>
+        <BsLink45Deg />
+        <Link to={path}>{name}</Link>
+      </Card.Footer>
     </Card>
   );
 }

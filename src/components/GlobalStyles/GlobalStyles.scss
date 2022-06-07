@@ -46,6 +46,41 @@ label {
   border-radius: 10px;
 }
 
+[class*='-card'] {
+  padding: 1rem 0.5rem;
+  margin-bottom: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid #fff;
+  background-color: var(--card-background-color);
+}
+
+[class*='-card']:hover {
+  border: 1px solid var(--violet);
+}
+
+.home-card {
+  padding: 0 0.5rem;
+  text-align: start;
+}
+
+.home-card a {
+  text-decoration: none;
+  color: var(--violet);
+}
+
+.home-card .card-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0);
+  color: var(--violet);
+  font-size: 150%;
+}
+
+.home-card .card-footer {
+  color: var(--violet);
+  background-color: rgba(0, 0, 0, 0);
+}
+
 /*Staff Card */
 #staffCard,
 #addStaffCard,

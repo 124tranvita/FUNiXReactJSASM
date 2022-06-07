@@ -22,13 +22,13 @@ function App() {
   useEffect(() => {
     let timeID;
 
-    if (deptModifyStatus === 'succeeded') {
+    if (deptModifyStatus === 'succeeded' || staffModifyStatus === 'succeeded') {
       timeID = setTimeout(() => dispatch(getDepts()), 500);
     }
 
     return () => clearTimeout(timeID);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deptModifyStatus]);
+  }, [deptModifyStatus, staffModifyStatus]);
 
   // Initial API Staff request
   useEffect(() => {
