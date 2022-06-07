@@ -66,8 +66,9 @@ function Delete({ action, disabled, component }) {
         isClose.current = false;
       }, 500);
     }
-    // eslint-disable-next-line
+
     return () => clearTimeout(timeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (

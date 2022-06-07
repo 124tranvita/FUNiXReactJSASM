@@ -53,7 +53,7 @@ function UpdateStaff({ staff }) {
   const handleShow = () => {
     setButton({
       variant: 'primary',
-      label: 'Thêm',
+      label: 'Chỉnh sửa',
       disabled: false,
     });
     setShow(true);
@@ -70,6 +70,7 @@ function UpdateStaff({ staff }) {
       }, 500);
     }
     return () => clearTimeout(timeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (

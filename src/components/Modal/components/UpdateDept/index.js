@@ -53,7 +53,7 @@ function UpdateDept({ dept }) {
   const handleShow = () => {
     setButton({
       variant: 'primary',
-      label: 'Thêm',
+      label: 'Chỉnh sửa',
       disabled: false,
     });
     setShow(true);
@@ -69,8 +69,9 @@ function UpdateDept({ dept }) {
         isClose.current = false;
       }, 500);
     }
-    // eslint-disable-next-line
+
     return () => clearTimeout(timeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (

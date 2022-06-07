@@ -15,6 +15,7 @@ function App() {
   // Initial API Deparment request
   useEffect(() => {
     dispatch(getDepts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // API request every Dept List is modified
@@ -26,11 +27,13 @@ function App() {
     }
 
     return () => clearTimeout(timeID);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deptModifyStatus]);
 
   // Initial API Staff request
   useEffect(() => {
     dispatch(getStaffs());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // API request every Staff List is modified
@@ -42,6 +45,7 @@ function App() {
     }
 
     return () => clearTimeout(timeID);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [staffModifyStatus]);
 
   return (
