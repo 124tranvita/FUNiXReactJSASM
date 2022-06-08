@@ -3,11 +3,11 @@ import { Card } from 'react-bootstrap';
 
 function StaffCard({ staffList }) {
   return (
-    <Card id="deptStaffListCard">
+    <Card className="staff-card">
       <Card.Body className="scroll-list">
         {staffList.map((staff) => (
           <div className="row mb-3 pb-2 mx-2 border-bottom" key={staff.id}>
-            <div className="col-2">
+            <div className="col-2" style={{ textAlign: 'center' }}>
               <Card.Img src={staff.image} width="64" height="64" />
             </div>
             <div className="col-10">
@@ -16,9 +16,13 @@ function StaffCard({ staffList }) {
               </Link>
               <span className="text-muted">Mã NV: {staff.id}</span>
               <span className="text-muted mx-2">|</span>
-              <span className="text-muted">Phòng ban: {staff.department.name} </span>
+              <span className="text-muted">
+                Phòng ban: {staff.department.name}{' '}
+              </span>
               <span className="text-muted mx-2">|</span>
-              <span className="text-muted">Ngày vào làm: {staff.startDate}</span>
+              <span className="text-muted">
+                Ngày vào làm: {staff.startDate}
+              </span>
             </div>
           </div>
         ))}

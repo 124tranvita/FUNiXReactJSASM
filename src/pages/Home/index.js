@@ -1,11 +1,17 @@
 import { useSelector } from 'react-redux';
 import HomeCard from '../../components/Card/components/HomeCard';
 import { StaffLineChart, DeptsBudgetLineChart, DeptsBudgetPieChart } from '../../utils/charts';
+import { CardLoader } from '../../components/Loader';
 
 function Home() {
   const { staffList, deptList } = useSelector((state) => ({
     staffList: state.staff.get.staffs,
     deptList: state.department.get.departments,
+  }));
+
+  const { staffStatus, deptStatus } = useSelector((state) => ({
+    staffStatus: state.staff.get.status,
+    deptStatus: state.department.get.status,
   }));
 
   const cards = [
@@ -33,29 +39,51 @@ function Home() {
       <div className="row">
         {cards.map((card) => (
           <div className="col-12 col-sm-4" key={card.name}>
-            <HomeCard
-              name={card.name}
-              description={card.description}
-              list={card.list}
-              path={card.path}
-            />
+            {staffStatus === 'loading' && deptStatus === 'loading' && (
+              <div className="home-card">
+                <CardLoader height={'200px'} />
+              </div>
+            )}
+            {staffStatus === 'succeeded' && deptStatus === 'succeeded' && (
+              <HomeCard
+                name={card.name}
+                description={card.description}
+                list={card.list}
+                path={card.path}
+              />
+            )}
           </div>
         ))}
       </div>
       <div className="row mt-5">
         <div className="col-12 col-sm-6">
           <div className="chart-card">
-            <StaffLineChart depts={deptList} />
+            {staffStatus === 'loading' && deptStatus === 'loading' && (
+              <CardLoader height={'350px'} />
+            )}
+            {staffStatus === 'succeeded' && deptStatus === 'succeeded' && (
+              <StaffLineChart depts={deptList} />
+            )}
           </div>
         </div>
         <div className="col-12 col-sm-6">
           <div className="chart-card">
-            <DeptsBudgetLineChart depts={deptList} />
+            {staffStatus === 'loading' && deptStatus === 'loading' && (
+              <CardLoader height={'350px'} />
+            )}
+            {staffStatus === 'succeeded' && deptStatus === 'succeeded' && (
+              <DeptsBudgetLineChart depts={deptList} />
+            )}
           </div>
         </div>
         <div className="col-12">
           <div className="chart-card">
-            <DeptsBudgetPieChart depts={deptList} />
+            {staffStatus === 'loading' && deptStatus === 'loading' && (
+              <CardLoader height={'350px'} />
+            )}
+            {staffStatus === 'succeeded' && deptStatus === 'succeeded' && (
+              <DeptsBudgetPieChart depts={deptList} />
+            )}
           </div>
         </div>
       </div>

@@ -34,10 +34,7 @@ function Header() {
               </NavLink>
             </Nav>
             <Nav>
-              <Nav.Link className="nav-link">Quản lý</Nav.Link>
-              <NavLink className="nav-link" to="/test">
-                Go to Test
-              </NavLink>
+              <Nav.Link className="nav-link">Đăng xuất</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

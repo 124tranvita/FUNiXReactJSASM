@@ -6,7 +6,7 @@ import dateFormat from 'dateformat';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import { UpdateStaff, Delete } from '../../components/Modal';
 import { getOverTime } from '../../utils/data';
-import Loader from '../../components/Loader';
+import { PageLoader } from '../../components/Loader';
 import { deleteStaff } from '../../features/Staffs/staffsSlice';
 
 function StaffDetail() {
@@ -22,7 +22,7 @@ function StaffDetail() {
   if (!staffList[0]) {
     return (
       <div>
-        <Loader />
+        <PageLoader />
       </div>
     );
   }
@@ -52,13 +52,15 @@ function StaffDetail() {
         </div>
 
         <div className="container my-3">
-          <div className="row">
+          <div className="row staff-detail">
             <div className="col-12 col-sm-3 mb-3">
-              <Card id="staffDetailCard">
+              <Card className="staff-profile-card">
                 <Card.Img variant="top" src={staff.image} />
                 <Card.Body>
                   <Card.Title>{staff.name}</Card.Title>
-                  <Card.Text className="text-muted">{staff.department.name}</Card.Text>
+                  <Card.Text className="text-muted">
+                    {staff.department.name}
+                  </Card.Text>
                   <div className="row">
                     <div className="col-12 col-xl-6 mb-3">
                       <UpdateStaff staff={staff} />
@@ -76,7 +78,7 @@ function StaffDetail() {
             </div>
 
             <div className="col-12 col-sm-9 mb-3">
-              <Card id="staffInfoCard">
+              <Card className="staff-info-card">
                 <Card.Body>
                   <div className="row">
                     <div className="col-sm-6 col-xl-4">
@@ -117,13 +119,17 @@ function StaffDetail() {
                     <div className="col-sm-6 col-xl-4">
                       <strong>Số ngày nghỉ còn lại</strong>
                     </div>
-                    <div className="col-sm-6 col-xl-8">{staff.annualLeave} ngày</div>
+                    <div className="col-sm-6 col-xl-8">
+                      {staff.annualLeave} ngày
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-sm-6 col-xl-4">
                       <strong>Số ngày đã làm thêm</strong>
                     </div>
-                    <div className="col-sm-6 col-xl-8">{getOverTime(staff.overTime)}</div>
+                    <div className="col-sm-6 col-xl-8">
+                      {getOverTime(staff.overTime)}
+                    </div>
                   </div>
                 </Card.Body>
               </Card>

@@ -14,7 +14,7 @@ function HomeCard({ name, description, list, path }) {
         <Card.Title>
           {list.length} {name}{' '}
         </Card.Title>
-        <Card.Text>{description}</Card.Text>
+        <Card.Text className="text-muted">{description}</Card.Text>
       </Card.Body>
       <Card.Footer>
         <BsLink45Deg />

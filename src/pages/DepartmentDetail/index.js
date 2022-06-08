@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import { UpdateDept, Delete } from '../../components/Modal';
-import Loader from '../../components/Loader';
+import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
 import { deleteDept } from '../../features/Deparments/departmentSlice';
 
@@ -19,14 +19,16 @@ function DepartmentDetail() {
   if (!deptList[0]) {
     return (
       <>
-        <Loader />
+        <PageLoader />
       </>
     );
   }
 
   if (deptList.length !== 0) {
     const dept = deptList.filter((dept) => dept.id === deptId)[0];
-    const deptStaff = staffList.filter((staff) => staff.department.id === deptId);
+    const deptStaff = staffList.filter(
+      (staff) => staff.department.id === deptId,
+    );
 
     if (!dept) {
       navigate('/departments');
@@ -51,11 +53,13 @@ function DepartmentDetail() {
 
         <div className="row">
           <div className="col-12 col-sm-3">
-            <Card id="deptDetailCard">
+            <Card className="dept-detail-card">
               <Card.Img variant="top" src="/assets/images/department.svg" />
               <Card.Body>
                 <Card.Title>{dept.name}</Card.Title>
-                <Card.Text className="text-muted">Số nhân viên: {dept.numberOfStaff}</Card.Text>
+                <Card.Text className="text-muted">
+                  Số nhân viên: {dept.numberOfStaff}
+                </Card.Text>
                 <div className="row">
                   <div className="col-12 col-lg-6 mb-3">
                     <UpdateDept dept={dept} />
@@ -80,23 +84,33 @@ function DepartmentDetail() {
             </Card>
           </div>
           <div className="col-12 col-sm-9">
-            <Card id="deptStaffListCard">
+            <Card className="dept-staffs-card">
               <Card.Body className="scroll-list">
                 {!deptStaff[0] && <Error error={'Không có nhân viên'} />}
                 {deptStaff[0] && (
                   <>
                     {deptStaff.map((staff) => (
-                      <div className="row mb-3 pb-2 mx-2 border-bottom" key={staff.id}>
-                        <div className="col-2">
+                      <div
+                        className="row mb-3 pb-2 mx-2 border-bottom"
+                        key={staff.id}
+                      >
+                        <div className="col-2" style={{ textAlign: 'center' }}>
                           <Card.Img src={staff.image} width="64" height="64" />
                         </div>
                         <div className="col-10">
-                          <Link to={`/staffs/${staff.id}`} className="text-decoration-none">
+                          <Link
+                            to={`/staffs/${staff.id}`}
+                            className="text-decoration-none"
+                          >
                             <Card.Title>{staff.name}</Card.Title>
                           </Link>
-                          <span className="text-muted">Ngày vào làm: {staff.startDate}</span>
+                          <span className="text-muted">
+                            Ngày vào làm: {staff.startDate}
+                          </span>
                           <span className="text-muted mx-2">|</span>
-                          <span className="text-muted">Hệ số lương: {staff.salaryScale} </span>
+                          <span className="text-muted">
+                            Hệ số lương: {staff.salaryScale}{' '}
+                          </span>
                           <span className="text-muted mx-2">|</span>
                           <span className="text-muted">
                             Số giờ đã làm thêm {staff.overTime}

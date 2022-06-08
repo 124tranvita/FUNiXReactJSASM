@@ -34,3 +34,8 @@
     transform: rotate(360deg);
   }
 }
+
+.loaderWrapper {
+  width: 100%;
+  position: relative;
+}

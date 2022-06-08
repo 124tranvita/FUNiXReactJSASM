@@ -7,7 +7,7 @@ import StaffCard from '../../components/Card/components/StaffCard';
 import { StaffIdSort } from '../../components/Sort';
 import { staffKeyword } from '../../features/Search/searchSlice';
 import { AddStaff } from '../../components/Modal';
-import Loader from '../../components/Loader';
+import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
 
 function Staff() {
@@ -84,7 +84,7 @@ function Staff() {
 
       {status === 'loading' && (
         <div className="position-relative">
-          <Loader />
+          <PageLoader />
         </div>
       )}
 

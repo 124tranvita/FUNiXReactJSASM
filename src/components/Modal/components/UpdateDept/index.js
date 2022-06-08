@@ -78,7 +78,7 @@ function UpdateDept({ dept }) {
     <>
       <Button
         className="btn-edit btn-outline-secondary"
-        style={{ width: '7rem' }}
+        style={{ width: '6rem' }}
         onClick={handleShow}
       >
         Chỉnh sửa
@@ -99,7 +99,9 @@ function UpdateDept({ dept }) {
                 .min(2, 'Yêu cầu nhiều hơn 2 ký tự')
                 .max(15, 'Yêu cầu dưới 15 ký tự')
                 .test('name', 'Phòng ban đã được đăng ký', (value) => {
-                  const found = deptList.filter((dept) => dept.name === value)[0];
+                  const found = deptList.filter(
+                    (dept) => dept.name === value,
+                  )[0];
                   return !found;
                 })
                 .required('Yêu cầu nhập'),
@@ -122,7 +124,11 @@ function UpdateDept({ dept }) {
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                <Button variant={button.variant} type="submit" disabled={button.disabled}>
+                <Button
+                  variant={button.variant}
+                  type="submit"
+                  disabled={button.disabled}
+                >
                   {button.label}
                 </Button>
               </div>

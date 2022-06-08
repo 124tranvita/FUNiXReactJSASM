@@ -1,4 +1,12 @@
-import { Home, Staff, Department, DepartmentDetail, Salary, StaffDetail } from '../pages';
+import {
+  Home,
+  Staff,
+  Department,
+  DepartmentDetail,
+  Salary,
+  StaffDetail,
+  PageNotFound,
+} from '../pages';
 
 export const privateRoutes = [
   { path: '/', component: Home },
@@ -7,4 +15,5 @@ export const privateRoutes = [
   { path: '/departments', component: Department },
   { path: '/departments/:deptId', component: DepartmentDetail },
   { path: '/salaries', component: Salary },
+  { path: '/*', component: PageNotFound },
 ];

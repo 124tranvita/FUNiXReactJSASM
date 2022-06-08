@@ -50,13 +50,21 @@ label {
   padding: 1rem 0.5rem;
   margin-bottom: 2rem;
   border-radius: 15px;
-  text-align: center;
+  text-align: start;
   border: 1px solid #fff;
   background-color: var(--card-background-color);
 }
 
 [class*='-card']:hover {
-  border: 1px solid var(--violet);
+  box-shadow: 0 2px 2px hsl(38deg 16% 76% / 50%);
+}
+
+[class*='-card'] img {
+  width: 35%;
+  height: auto;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px solid #fff;
 }
 
 .home-card {
@@ -81,114 +89,43 @@ label {
   background-color: rgba(0, 0, 0, 0);
 }
 
-/*Staff Card */
-#staffCard,
-#addStaffCard,
-#staffDetailCard,
-#departmentCard,
-#deptDetailCard,
-#deptStaffListCard,
-#salaryCard {
-  padding: 1rem 0.5rem;
-  border-radius: 15px;
+.staff-profile-card {
   text-align: center;
-  border: 1px solid #fff;
-  background-color: var(--card-background-color);
+  margin-bottom: 0;
+  height: 100%;
 }
 
-@media screen and (min-width: 768px) {
-  #staffCard,
-  #addStaffCard,
-  #departmentCard,
-  #salaryCar {
-    height: 18rem;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  #staffCard,
-  #addStaffCard,
-  #departmentCard,
-  #salaryCar {
-    height: 14rem;
-  }
-}
-
-#staffCard:hover,
-#addStaffCard:hover,
-#departmentCard:hover,
-#salaryCard:hover {
-  border: 1px solid var(--purple);
-}
-
-#addStaffCard:hover,
-#salaryCard:hover {
-  cursor: pointer;
-}
-
-#staffCard img,
-#addStaffCard img,
-#staffDetailCard img,
-#deptDetailCard img,
-#departmentCard img {
-  width: 50%;
-  height: auto;
-  margin: auto;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  background-color: var(--red-orange);
-}
-
-#addStaffCard img {
-  background-color: var(--violet);
-}
-
-#staffCard .card-body,
-#addStaffCard .card-body,
-#departmentCard .card-body {
-  border-radius: 0 0 15px 15px;
-  padding-top: 2rem;
-}
-
-#staffInfoCard {
+.staff-info-card {
   height: 100%;
   padding: 0.5rem 1rem;
-  border-radius: 15px;
-  border: 1px solid #fff;
-  background-color: var(--card-background-color);
 }
 
-#staffInfoCard .card-body {
+.staff-info-card .card-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#staffInfoCard .row {
+.staff-info-card .row {
   padding: 0.5rem 0;
   border-bottom: 1px solid #dee2e6;
 }
 
-#deptStaffListCard {
-  text-align: start;
+.dept-detail-card {
+  text-align: center;
 }
 
-#salaryCard {
-  padding: 0;
-  text-align: start;
+.staff-detail {
+  display: flex;
+  justify-content: space-between;
 }
 
-#salaryCard .card-header {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  background-color: var(--purple);
-  color: #fff;
+.salary-card .card-header,
+.salary-card .card-footer {
+  background-color: rgba(0, 0, 0, 0);
+  color: var(--violet);
 }
 
-#salaryFooterCard {
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
 /*Search From Label */
 #searchFormLabel {
   color: #fff;

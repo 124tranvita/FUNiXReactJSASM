@@ -77,7 +77,7 @@ function Delete({ action, disabled, component }) {
         variant="danger"
         onClick={handleShow}
         disabled={disabled}
-        style={{ width: '7rem' }}
+        style={{ width: '6rem' }}
       >
         Xóa
       </Button>

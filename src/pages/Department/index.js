@@ -7,7 +7,7 @@ import DepartmentCard from '../../components/Card/components/DepartmentCard';
 import { DeptIdSort } from '../../components/Sort';
 import { departmentKeyword } from '../../features/Search/searchSlice';
 import { AddDept } from '../../components/Modal';
-import Loader from '../../components/Loader';
+import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
 
 function Department() {
@@ -82,7 +82,7 @@ function Department() {
 
       {status === 'loading' && (
         <div className="position-relative">
-          <Loader />
+          <PageLoader />
         </div>
       )}
 

@@ -3,12 +3,12 @@ import { getOverTime } from '../../../../utils/data';
 
 function SalaryCard({ staff }) {
   return (
-    <Card className="m-2" id="salaryCard">
+    <Card className="salary-card m-2" id="">
       <Card.Header>
         <Card.Title>{staff.name}</Card.Title>
       </Card.Header>
       <Card.Body>
-        <Table hover size="sm">
+        <Table hover size="sm" className="text-muted">
           <tbody>
             <tr>
               <td>Mã nhân viên:</td>
@@ -25,7 +25,7 @@ function SalaryCard({ staff }) {
           </tbody>
         </Table>
       </Card.Body>
-      <Card.Footer className="text-muted" id="salaryFooterCard">
+      <Card.Footer className="text-muted" id="">
         <Card.Title>
           <h5>Lương:</h5>
           <h4>{salaryFormat(staff.salary)}</h4>
@@ -36,7 +36,10 @@ function SalaryCard({ staff }) {
 }
 
 const salaryFormat = (salary) => {
-  let vnd = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+  let vnd = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
   return vnd.format(salary);
 };
 

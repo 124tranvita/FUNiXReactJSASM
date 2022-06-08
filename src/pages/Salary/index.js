@@ -5,7 +5,7 @@ import Search from '../../components/Search';
 import { SalaryCard } from '../../components/Card';
 import { SalarySort } from '../../components/Sort';
 import { salaryKeyword } from '../../features/Search/searchSlice';
-import Loader from '../../components/Loader';
+import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
 
 function Salary() {
@@ -92,7 +92,7 @@ function Salary() {
 
       {status === 'loading' && (
         <div className="position-relative">
-          <Loader />
+          <PageLoader />
         </div>
       )}
 
