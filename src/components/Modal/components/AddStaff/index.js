@@ -77,7 +77,10 @@ function AddStaff() {
 
   return (
     <>
-      <Button className="btn btn-add btn-outline-secondary" onClick={handleShow}>
+      <Button
+        className="btn btn-add btn-outline-secondary"
+        onClick={handleShow}
+      >
         <MdPersonAdd />
       </Button>
 
@@ -131,10 +134,14 @@ function AddStaff() {
               <MyTextInput label="Ngày sinh" name="doB" type="date" />
               <MySelect label="Ảnh đại diện" name="image">
                 <option value="">Chọn ảnh</option>
-                <option value="/assets/images/man.svg">Nam</option>
-                <option value="/assets/images/woman.svg">Nữ</option>
+                <option value="./assets/images/man.svg">Nam</option>
+                <option value="./assets/images/woman.svg">Nữ</option>
               </MySelect>
-              <MyTextInput label="Ngày vào công ty" name="startDate" type="date" />
+              <MyTextInput
+                label="Ngày vào công ty"
+                name="startDate"
+                type="date"
+              />
               <MySelect label="Phòng ban" name="deptId">
                 <option value="">Phòng ban</option>
                 {deptList.map((dept) => (
@@ -143,13 +150,29 @@ function AddStaff() {
                   </option>
                 ))}
               </MySelect>
-              <MyTextInput label="Hệ số lương" name="salaryScale" type="number" />
-              <MyTextInput label="Số ngày nghỉ còn lại" name="annualLeave" type="number" />
-              <MyTextInput label="Số giờ đã làm thêm" name="overTime" type="number" />
+              <MyTextInput
+                label="Hệ số lương"
+                name="salaryScale"
+                type="number"
+              />
+              <MyTextInput
+                label="Số ngày nghỉ còn lại"
+                name="annualLeave"
+                type="number"
+              />
+              <MyTextInput
+                label="Số giờ đã làm thêm"
+                name="overTime"
+                type="number"
+              />
 
               {/* <button type="submit">Thêm</button> */}
               <div className="col-12 mt-2 mx-auto">
-                <Button variant={button.variant} type="submit" disabled={button.disabled}>
+                <Button
+                  variant={button.variant}
+                  type="submit"
+                  disabled={button.disabled}
+                >
                   {button.label}
                 </Button>
               </div>

@@ -133,8 +133,8 @@ function UpdateStaff({ staff }) {
               <MyTextInput label="Ngày sinh" name="doB" type="date" />
               <MySelect label="Ảnh đại diện" name="image">
                 <option value="">Chọn ảnh</option>
-                <option value="/assets/images/man.svg">Nam</option>
-                <option value="/assets/images/woman.svg">Nữ</option>
+                <option value="./assets/images/man.svg">Nam</option>
+                <option value="./assets/images/woman.svg">Nữ</option>
               </MySelect>
               <MyTextInput
                 label="Ngày vào công ty"

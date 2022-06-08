@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { privateRoutes } from './routes';
 import Layout from './components/Layout';
 import { getStaffs } from './features/Staffs/staffsSlice';
@@ -10,7 +10,9 @@ import { getDepts } from './features/Deparments/departmentSlice';
 function App() {
   const dispatch = useDispatch();
   const staffModifyStatus = useSelector((state) => state.staff.modify.status);
-  const deptModifyStatus = useSelector((state) => state.department.modify.status);
+  const deptModifyStatus = useSelector(
+    (state) => state.department.modify.status,
+  );
 
   // Initial API Deparment request
   useEffect(() => {
@@ -49,7 +51,7 @@ function App() {
   }, [staffModifyStatus]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         {privateRoutes.map((route, index) => {
           const Page = route.component;
@@ -67,7 +69,7 @@ function App() {
           );
         })}
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

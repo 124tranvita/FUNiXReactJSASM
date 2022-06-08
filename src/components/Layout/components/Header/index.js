@@ -8,15 +8,15 @@ function Header() {
     <div className="row">
       <Navbar expand="lg">
         <Container>
-          <Navbar.Brand href="/home">
+          <NavLink className="nav-brand" to="/">
             <img
-              src="/assets/images/logo.svg"
+              src="./assets/images/logo.svg"
               width="32"
               height="32"
               className="d-inline-block align-top"
               alt="People Manage Logo"
             />
-          </Navbar.Brand>
+          </NavLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

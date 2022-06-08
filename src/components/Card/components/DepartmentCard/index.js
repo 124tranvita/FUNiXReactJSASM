@@ -9,7 +9,7 @@ function DepartmentCard({ deparmentList }) {
           <div className="row mb-3 pb-2 mx-2 border-bottom" key={dept.id}>
             <div className="col-2" style={{ textAlign: 'center' }}>
               <Card.Img
-                src="/assets/images/department.svg"
+                src="./assets/images/department.svg"
                 width="64"
                 height="64"
               />
