@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import LazyLoad from 'react-lazyload';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
@@ -9,6 +9,7 @@ import { staffKeyword } from '../../features/Search/searchSlice';
 import { AddStaff } from '../../components/Modal';
 import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
+import { useDidMountEffect } from '../../hooks';
 
 function Staff() {
   const { staffs, status, error } = useSelector((state) => ({
@@ -26,28 +27,14 @@ function Staff() {
 
   const [staffList, setStaffList] = useState(staffs);
 
-  // Prevent useEffect running on initial render
-  const initRender = useRef(true);
-
-  useEffect(() => {
-    /**First render will set initRender.current = fales and ignore the array filter */
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
+  useDidMountEffect(() => {
     const searchedList = staffs.filter((staff) =>
       staff.name.toLowerCase().includes(searchKeyword.toLowerCase()),
     );
     setStaffList(searchedList);
-  }, [searchKeyword, staffs]);
+  }, [searchKeyword]);
 
-  useEffect(() => {
-    /**First render will set initRender.current = fales and ignore the array sort */
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
-
+  useDidMountEffect(() => {
     const staffListCopied = [...staffList];
 
     if (idAsc) {
@@ -59,7 +46,7 @@ function Staff() {
     }
 
     setStaffList(staffListCopied);
-  }, [idAsc, idDes, staffList]);
+  }, [idAsc, idDes]);
 
   return (
     <>

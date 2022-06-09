@@ -6,6 +6,7 @@ import { privateRoutes } from './routes';
 import Layout from './components/Layout';
 import { getStaffs } from './features/Staffs/staffsSlice';
 import { getDepts } from './features/Deparments/departmentSlice';
+import { useDidMountEffect } from './hooks';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function App() {
   }, []);
 
   // API request every Dept List is modified
-  useEffect(() => {
+  useDidMountEffect(() => {
     let timeID;
 
     if (deptModifyStatus === 'succeeded' || staffModifyStatus === 'succeeded') {
@@ -29,7 +30,6 @@ function App() {
     }
 
     return () => clearTimeout(timeID);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deptModifyStatus, staffModifyStatus]);
 
   // Initial API Staff request
@@ -39,7 +39,7 @@ function App() {
   }, []);
 
   // API request every Staff List is modified
-  useEffect(() => {
+  useDidMountEffect(() => {
     let timeID;
 
     if (staffModifyStatus === 'succeeded') {
@@ -47,7 +47,6 @@ function App() {
     }
 
     return () => clearTimeout(timeID);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [staffModifyStatus]);
 
   return (

@@ -8,7 +8,7 @@ function Header() {
     <div className="row">
       <Navbar expand="lg">
         <Container>
-          <NavLink className="nav-brand" to="/">
+          <Navbar.Brand href="#">
             <img
               src="./assets/images/logo.svg"
               width="32"
@@ -16,7 +16,7 @@ function Header() {
               className="d-inline-block align-top"
               alt="People Manage Logo"
             />
-          </NavLink>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

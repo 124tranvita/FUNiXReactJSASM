@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import Search from '../../components/Search';
@@ -7,6 +7,7 @@ import { SalarySort } from '../../components/Sort';
 import { salaryKeyword } from '../../features/Search/searchSlice';
 import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
+import { useDidMountEffect } from '../../hooks';
 
 function Salary() {
   const { staffs, status, error } = useSelector((state) => ({
@@ -23,32 +24,20 @@ function Salary() {
     salaryDes: state.sort.salary.salaryDes,
   }));
 
-  // Prevent useEffect running on initial render
-  const initRender = useRef(true);
-
-  useEffect(() => {
-    /**First render will set initRender.current = fales and ignore the array filter */
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
+  useDidMountEffect(() => {
     const searchedList = staffs.filter((staff) =>
       staff.name.toLowerCase().includes(searchKeyword.toLowerCase()),
     );
     setStaffList(searchedList);
-  }, [searchKeyword, staffs]);
+  }, [searchKeyword]);
 
-  useEffect(() => {
-    /**First render will set initRender.current = fales and ignore the array sort */
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
-
+  useDidMountEffect(() => {
     const staffListCopied = staffList.map((staff) => {
       return {
         ...staff,
-        salary: (staff.salaryScale * 3000000 + staff.overTime * 25000).toFixed(0),
+        salary: (staff.salaryScale * 3000000 + staff.overTime * 25000).toFixed(
+          0,
+        ),
       };
     });
 
@@ -69,7 +58,7 @@ function Salary() {
     }
 
     setStaffList(staffListCopied);
-  }, [idAsc, idDes, salaryAsc, salaryDes, staffList]);
+  }, [idAsc, idDes, salaryAsc, salaryDes]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import LazyLoad from 'react-lazyload';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
@@ -9,6 +9,7 @@ import { departmentKeyword } from '../../features/Search/searchSlice';
 import { AddDept } from '../../components/Modal';
 import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
+import { useDidMountEffect } from '../../hooks';
 
 function Department() {
   const { departments, status, error } = useSelector((state) => ({
@@ -24,28 +25,14 @@ function Department() {
 
   const [deparmentList, setDepartmentList] = useState(departments);
 
-  // Prevent useEffect running on initial render
-  const initRender = useRef(true);
-
-  useEffect(() => {
-    /**First render will set initRender.current = fales and ignore the array filter */
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
+  useDidMountEffect(() => {
     const searchedList = departments.filter((staff) =>
       staff.name.toLowerCase().includes(searchKeyword.toLowerCase()),
     );
     setDepartmentList(searchedList);
-  }, [searchKeyword, departments]);
+  }, [searchKeyword]);
 
-  useEffect(() => {
-    /**First render will set initRender.current = fales and ignore the array sort */
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
-
+  useDidMountEffect(() => {
     const departmentListCopied = [...deparmentList];
 
     if (idAsc) {
@@ -57,7 +44,7 @@ function Department() {
     }
 
     setDepartmentList(departmentListCopied);
-  }, [idAsc, idDes, deparmentList]);
+  }, [idAsc, idDes]);
 
   return (
     <>

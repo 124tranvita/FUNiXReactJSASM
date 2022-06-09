@@ -1,6 +1,10 @@
 import { useSelector } from 'react-redux';
 import HomeCard from '../../components/Card/components/HomeCard';
-import { StaffLineChart, DeptsBudgetLineChart, DeptsBudgetPieChart } from '../../utils/charts';
+import {
+  StaffLineChart,
+  DeptsBudgetLineChart,
+  DeptsBudgetPieChart,
+} from '../../utils/charts';
 import { CardLoader } from '../../components/Loader';
 
 function Home() {
