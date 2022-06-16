@@ -32,6 +32,7 @@ function Staff() {
     if (status === 'succeeded' && !error) {
       setStaffList(staffs);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, error]);
 
   // Filter staff
