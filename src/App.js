@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { HashRouter, Routes, Route, BrowserRouter } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { privateRoutes } from './routes';
 import Layout from './components/Layout';
 import { getStaffs } from './features/Staffs/staffsSlice';
