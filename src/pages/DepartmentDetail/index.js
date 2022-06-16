@@ -54,7 +54,7 @@ function DepartmentDetail() {
         <div className="row">
           <div className="col-12 col-sm-3">
             <Card className="dept-detail-card">
-              <Card.Img variant="top" src="/assets/images/department.svg" />
+              <Card.Img variant="top" src="./assets/images/department.svg" />
               <Card.Body>
                 <Card.Title>{dept.name}</Card.Title>
                 <Card.Text className="text-muted">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import LazyLoad from 'react-lazyload';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
@@ -23,8 +23,16 @@ function Department() {
     idDes: state.sort.deptIdDes,
   }));
 
-  const [deparmentList, setDepartmentList] = useState(departments);
+  const [deparmentList, setDepartmentList] = useState([]);
 
+  // Only setStaffList when staffs data is responsed
+  useEffect(() => {
+    if (status === 'succeeded' && !error) {
+      setDepartmentList(departments);
+    }
+  }, [status, error]);
+
+  // Dept filter
   useDidMountEffect(() => {
     const searchedList = departments.filter((staff) =>
       staff.name.toLowerCase().includes(searchKeyword.toLowerCase()),
@@ -32,6 +40,7 @@ function Department() {
     setDepartmentList(searchedList);
   }, [searchKeyword]);
 
+  // Dept sort by
   useDidMountEffect(() => {
     const departmentListCopied = [...deparmentList];
 
@@ -80,7 +89,7 @@ function Department() {
       )}
 
       <div className="row">
-        {status === 'succeeded' && !error && (
+        {deparmentList[0] && (
           <>
             <LazyLoad>
               <DepartmentCard deparmentList={deparmentList} />

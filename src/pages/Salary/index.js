@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
 import Search from '../../components/Search';
@@ -8,6 +8,7 @@ import { salaryKeyword } from '../../features/Search/searchSlice';
 import { PageLoader } from '../../components/Loader';
 import Error from '../../components/Error';
 import { useDidMountEffect } from '../../hooks';
+import { Fade, Stagger } from 'react-animation-components';
 
 function Salary() {
   const { staffs, status, error } = useSelector((state) => ({
@@ -15,8 +16,8 @@ function Salary() {
     status: state.staff.get.status,
     error: state.staff.get.error,
   }));
+  const [staffList, setStaffList] = useState([]);
   const searchKeyword = useSelector((state) => state.search.salarySearch);
-  const [staffList, setStaffList] = useState(staffs);
   const { idAsc, idDes, salaryAsc, salaryDes } = useSelector((state) => ({
     idAsc: state.sort.salary.staffIdAsc,
     idDes: state.sort.salary.staffIdDes,
@@ -24,6 +25,14 @@ function Salary() {
     salaryDes: state.sort.salary.salaryDes,
   }));
 
+  // Only setStaffList when staffs data is responsed
+  useEffect(() => {
+    if (status === 'succeeded' && !error) {
+      setStaffList(staffs);
+    }
+  }, [status, error]);
+
+  // Filter staff
   useDidMountEffect(() => {
     const searchedList = staffs.filter((staff) =>
       staff.name.toLowerCase().includes(searchKeyword.toLowerCase()),
@@ -31,6 +40,7 @@ function Salary() {
     setStaffList(searchedList);
   }, [searchKeyword]);
 
+  // Sort salary by
   useDidMountEffect(() => {
     const staffListCopied = staffList.map((staff) => {
       return {
@@ -96,7 +106,11 @@ function Salary() {
           <>
             {staffList.map((staff) => (
               <div className="col-12 col-sm-6 col-xl-3" key={staff.id}>
-                <SalaryCard staff={staff} />
+                <Stagger in>
+                  <Fade in>
+                    <SalaryCard staff={staff} />
+                  </Fade>
+                </Stagger>
               </div>
             ))}
           </>

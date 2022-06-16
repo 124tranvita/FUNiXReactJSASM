@@ -29,27 +29,31 @@ export const addStaff = createAsyncThunk('staff/addStaff', async (data) => {
   }
 });
 
-export const updateStaff = createAsyncThunk('staff/updateStaff', async ({ staffId, data }) => {
-  console.log('staff Id: ', staffId);
-  console.log('Data: ', data);
-  try {
-    const response = await manageApi.patch(`/staffs/${staffId}`, data);
-    return response.data;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-});
+export const updateStaff = createAsyncThunk(
+  'staff/updateStaff',
+  async ({ staffId, data }) => {
+    try {
+      const response = await manageApi.patch(`/staffs/${staffId}`, data);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  },
+);
 
-export const deleteStaff = createAsyncThunk('staff/deleteStaff', async (staffId) => {
-  try {
-    const response = await manageApi.delete(`/staffs/${staffId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-});
+export const deleteStaff = createAsyncThunk(
+  'staff/deleteStaff',
+  async (staffId) => {
+    try {
+      const response = await manageApi.delete(`/staffs/${staffId}`);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  },
+);
 
 const staffsSlice = createSlice({
   name: 'staff',

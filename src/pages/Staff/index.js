@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import LazyLoad from 'react-lazyload';
 import HomeBreadcrumb from '../../components/HomeBreadcrumb';
@@ -25,8 +25,16 @@ function Staff() {
     idDes: state.sort.staffIdDes,
   }));
 
-  const [staffList, setStaffList] = useState(staffs);
+  const [staffList, setStaffList] = useState([]);
 
+  // Only setStaffList when staffs data is responsed
+  useEffect(() => {
+    if (status === 'succeeded' && !error) {
+      setStaffList(staffs);
+    }
+  }, [status, error]);
+
+  // Filter staff
   useDidMountEffect(() => {
     const searchedList = staffs.filter((staff) =>
       staff.name.toLowerCase().includes(searchKeyword.toLowerCase()),
@@ -34,6 +42,7 @@ function Staff() {
     setStaffList(searchedList);
   }, [searchKeyword]);
 
+  // Sort staff by
   useDidMountEffect(() => {
     const staffListCopied = [...staffList];
 
@@ -82,7 +91,7 @@ function Staff() {
       )}
 
       <div className="row">
-        {status === 'succeeded' && !error && (
+        {staffList[0] && (
           <>
             <LazyLoad>
               <StaffCard staffList={staffList} />

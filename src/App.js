@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, BrowserRouter } from 'react-router-dom';
 import { privateRoutes } from './routes';
 import Layout from './components/Layout';
 import { getStaffs } from './features/Staffs/staffsSlice';
@@ -18,36 +18,28 @@ function App() {
   // Initial API Deparment request
   useEffect(() => {
     dispatch(getDepts());
+    dispatch(getStaffs());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // API request every Dept List is modified
   useDidMountEffect(() => {
+    console.log('Modify status changed!');
     let timeID;
 
-    if (deptModifyStatus === 'succeeded' || staffModifyStatus === 'succeeded') {
+    if (staffModifyStatus === 'succeeded') {
+      timeID = setTimeout(() => {
+        dispatch(getStaffs());
+        dispatch(getDepts());
+      }, 500);
+    }
+
+    if (deptModifyStatus === 'succeeded') {
       timeID = setTimeout(() => dispatch(getDepts()), 500);
     }
 
     return () => clearTimeout(timeID);
   }, [deptModifyStatus, staffModifyStatus]);
-
-  // Initial API Staff request
-  useEffect(() => {
-    dispatch(getStaffs());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // API request every Staff List is modified
-  useDidMountEffect(() => {
-    let timeID;
-
-    if (staffModifyStatus === 'succeeded') {
-      timeID = setTimeout(() => dispatch(getStaffs()), 500);
-    }
-
-    return () => clearTimeout(timeID);
-  }, [staffModifyStatus]);
 
   return (
     <HashRouter>
